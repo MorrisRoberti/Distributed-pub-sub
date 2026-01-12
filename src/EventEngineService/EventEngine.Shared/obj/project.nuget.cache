@@ -1,0 +1,8 @@
+{
+  "version": 2,
+  "dgSpecHash": "S0CehX60rr0TFExSjKfMyMfqJTc3MsgkKZjrGjFNcBrbmL7RcNoggcoJEX+OHvgQAP9UNADrYSXVvSfGio9+vw==",
+  "success": true,
+  "projectFilePath": "/home/morris/Workspace/dotnet_projects/test_prj/distributed_pub_sub/src/EventEngineService/EventEngine.Shared/EventEngine.Shared.csproj",
+  "expectedPackageFiles": [],
+  "logs": []
+}

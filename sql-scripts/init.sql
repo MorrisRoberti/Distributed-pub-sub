@@ -1,0 +1,39 @@
+
+CREATE DATABASE RegistryDB;
+GO
+USE RegistryDB;
+GO
+
+CREATE TABLE Subscriptions (
+    Id UNIQUEIDENTIFIER PRIMARY KEY,
+    UserId NVARCHAR(100) NOT NULL,
+    EventType NVARCHAR(50) NOT NULL,
+    CallbackUrl NVARCHAR(255) NOT NULL,
+    IsActive BIT DEFAULT 1,
+    CreatedAt DATETIME DEFAULT GETDATE()
+);
+GO
+
+
+CREATE DATABASE EventEngineDB;
+GO
+USE EventEngineDB;
+GO
+
+CREATE TABLE ReceivedEvents (
+    Id UNIQUEIDENTIFIER PRIMARY KEY,
+    RawPayload NVARCHAR(MAX) NOT NULL, -- Qui salviamo il JSON dell'evento (flessibilità)
+    EventType NVARCHAR(50) NOT NULL,
+    ReceivedAt DATETIME DEFAULT GETDATE(),
+    Processed BIT DEFAULT 0
+);
+
+CREATE TABLE DispatchLogs (
+    Id UNIQUEIDENTIFIER PRIMARY KEY,
+    EventId UNIQUEIDENTIFIER FOREIGN KEY REFERENCES ReceivedEvents(Id),
+    SubscriberUrl NVARCHAR(255) NOT NULL,
+    Status NVARCHAR(20) NOT NULL, -- 'SUCCESS', 'FAILED', 'RETRY'
+    Attempts INT DEFAULT 0,
+    LastAttemptAt DATETIME
+);
+GO

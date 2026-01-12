@@ -1,0 +1,16 @@
+{
+  "version": 2,
+  "dgSpecHash": "hrMs7C5XZNSFIDTAZS9WkXfNVRX1O8pUnnBzo+fLdqZQLJDimo7ZHcg9+WEmtJ4uV7/v+p9sJipZp/93GCmCNA==",
+  "success": true,
+  "projectFilePath": "/home/morris/Workspace/dotnet_projects/test_prj/distributed_pub_sub/src/EventEngineService/EventEngine.Api/EventEngine.Api.csproj",
+  "expectedPackageFiles": [
+    "/home/morris/.nuget/packages/microsoft.aspnetcore.openapi/8.0.22/microsoft.aspnetcore.openapi.8.0.22.nupkg.sha512",
+    "/home/morris/.nuget/packages/microsoft.extensions.apidescription.server/6.0.5/microsoft.extensions.apidescription.server.6.0.5.nupkg.sha512",
+    "/home/morris/.nuget/packages/microsoft.openapi/1.6.14/microsoft.openapi.1.6.14.nupkg.sha512",
+    "/home/morris/.nuget/packages/swashbuckle.aspnetcore/6.6.2/swashbuckle.aspnetcore.6.6.2.nupkg.sha512",
+    "/home/morris/.nuget/packages/swashbuckle.aspnetcore.swagger/6.6.2/swashbuckle.aspnetcore.swagger.6.6.2.nupkg.sha512",
+    "/home/morris/.nuget/packages/swashbuckle.aspnetcore.swaggergen/6.6.2/swashbuckle.aspnetcore.swaggergen.6.6.2.nupkg.sha512",
+    "/home/morris/.nuget/packages/swashbuckle.aspnetcore.swaggerui/6.6.2/swashbuckle.aspnetcore.swaggerui.6.6.2.nupkg.sha512"
+  ],
+  "logs": []
+}
