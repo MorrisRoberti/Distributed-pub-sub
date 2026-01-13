@@ -27,21 +27,29 @@ public class SubscriptionController : ControllerBase
         return CreatedAtAction(nameof(GetSubscription), new { subscriptionId = subId }, subId);
     }
 
-    [HttpGet(Name = "GetSubscription/{subscriptionId}")]
+    [HttpGet("{subscriptionId:guid}", Name = "GetSubscription")]
     public async Task<ActionResult<SubscriptionDTO?>> GetSubscription(Guid subscriptionId)
     {
         SubscriptionDTO? sub = await _business.GetSubscriptionAsync(subscriptionId);
         return sub;
     }
 
-    [HttpPut(Name = "UpdateSubscription")]
-    public ActionResult<SubscriptionDTO?> UpdateSubscription(SubscriptionDTO? subscription)
+    [HttpPut("{subscriptionId:guid}", Name = "UpdateSubscription")]
+    public async Task<ActionResult<SubscriptionDTO>> UpdateSubscription(Guid subscriptionId, SubscriptionDTO subscription)
     {
-        return NoContent();
+        SubscriptionDTO? sub = await _business.UpdateSubscriptionAsync(subscriptionId, subscription);
+
+        if (sub is null)
+        {
+            return NotFound(new { Message = $"Subscription {subscriptionId} not found" });
+        }
+
+
+        return Ok(sub);
     }
 
 
-    [HttpDelete(Name = "DeleteSubscription/{subscriptionId}")]
+    [HttpDelete("{subscriptionId:guid}", Name = "DeleteSubscription")]
     public async Task<ActionResult> DeleteSubscription(Guid subscriptionId)
     {
         bool result = await _business.DeleteSubscriptionAsync(subscriptionId);

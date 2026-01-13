@@ -27,7 +27,10 @@ public class Repository(SubscriptionDbContext subscriptionDbContext) : IReposito
     {
         return await subscriptionDbContext.Subscriptions.Where(s => s.Id == subscriptionId).FirstOrDefaultAsync(cancellationToken);
     }
-
+    public void UpdateSubscription(Subscription subscription)
+    {
+        subscriptionDbContext.Subscriptions.Update(subscription);
+    }
     public void DeleteSubscription(Subscription subscription)
     {
         subscriptionDbContext.Subscriptions.Remove(subscription);

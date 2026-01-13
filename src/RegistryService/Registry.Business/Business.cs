@@ -37,6 +37,33 @@ public class Business(IRepository repository, ILogger<Business> logger) : IBusin
         };
     }
 
+    public async Task<SubscriptionDTO?> UpdateSubscriptionAsync(Guid subscriptionId, SubscriptionDTO subscription, CancellationToken cancellationToken = default)
+    {
+        var sub = await repository.GetSubscriptionAsync(subscriptionId);
+
+        if (sub is null)
+            return null;
+
+        sub.UserId = subscription.UserId;
+        sub.EventType = subscription.EventType;
+        sub.CallbackUrl = subscription.CallbackUrl;
+        sub.IsActive = subscription.IsActive;
+
+        repository.UpdateSubscription(sub);
+
+        await repository.SaveChangesAsync(cancellationToken);
+
+        return new SubscriptionDTO
+        {
+            Id = sub.Id,
+            UserId = sub.UserId,
+            EventType = sub.EventType,
+            CallbackUrl = sub.CallbackUrl,
+            IsActive = sub.IsActive,
+            CreatedAt = sub.CreatedAt
+        };
+    }
+
     public async Task<bool> DeleteSubscriptionAsync(Guid subscriptionId, CancellationToken cancellationToken = default)
     {
         var sub = await repository.GetSubscriptionAsync(subscriptionId);
