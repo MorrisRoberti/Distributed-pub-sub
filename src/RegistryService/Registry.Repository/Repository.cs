@@ -1,5 +1,6 @@
 ﻿using Registry.Repository.Abstractions;
 using Registry.Repository.Models;
+using Microsoft.EntityFrameworkCore;
 namespace Registry.Repository;
 
 public class Repository(SubscriptionDbContext subscriptionDbContext) : IRepository
@@ -9,11 +10,9 @@ public class Repository(SubscriptionDbContext subscriptionDbContext) : IReposito
     {
         return await subscriptionDbContext.SaveChangesAsync(cancellationToken);
     }
-    public async Task CreateSubscriptionAsync(string UserId, string EventType, string CallbackUrl, CancellationToken cancellationToken = default)
+    public async Task<Subscription> CreateSubscriptionAsync(string UserId, string EventType, string CallbackUrl, CancellationToken cancellationToken = default)
     {
 
-        // insert the subscription in db
-        // i need to chose which fields I need to insert the record in db
         Subscription sub = new Subscription();
         sub.UserId = UserId;
         sub.EventType = EventType;
@@ -21,12 +20,12 @@ public class Repository(SubscriptionDbContext subscriptionDbContext) : IReposito
         sub.IsActive = true;
 
         await subscriptionDbContext.Subscriptions.AddAsync(sub, cancellationToken);
+        return sub;
     }
 
-    public async Task<Subscription?> GetSubscriptionAsync(int subscriptionId, CancellationToken cancellationToken = default)
+    public async Task<Subscription?> GetSubscriptionAsync(string subscriptionId, CancellationToken cancellationToken = default)
     {
-        // return await subscriptionDbContext.Subscriptions.Where(s => s.Id == subscriptionId).FirstOrDefaultAsync(cancellationToken);
-
-        return new Subscription();
+        Guid subIdGuid = new Guid(subscriptionId);
+        return await subscriptionDbContext.Subscriptions.Where(s => s.Id == subIdGuid).FirstOrDefaultAsync(cancellationToken);
     }
 }

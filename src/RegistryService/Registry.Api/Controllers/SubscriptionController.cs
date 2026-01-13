@@ -20,18 +20,18 @@ public class SubscriptionController : ControllerBase
     }
 
     [HttpPost(Name = "CreateSubscription")]
-    public async Task<ActionResult> CreateSubscription(SubscriptionDTO? subscription)
+    public async Task<ActionResult<string>> CreateSubscription(SubscriptionDTO? subscription)
     {
-        await _business.CreateSubscriptionAsync(subscription);
+        string subId = await _business.CreateSubscriptionAsync(subscription);
 
-        return Ok("Subscription Created");
+        return CreatedAtAction(nameof(GetSubscription), new { subscriptionId = subId }, subId);
     }
 
-    [HttpGet(Name = "GetSubscription")]
-    public ActionResult<SubscriptionDTO?> GetSubscription(int subscriptionId)
+    [HttpGet(Name = "GetSubscription/{subscriptionId}")]
+    public async Task<ActionResult<SubscriptionDTO?>> GetSubscription(string subscriptionId)
     {
-        Console.WriteLine("Get reached!");
-        return null;
+        SubscriptionDTO? sub = await _business.GetSubscriptionAsync(subscriptionId);
+        return sub;
     }
 
     [HttpPut(Name = "UpdateSubscription")]
