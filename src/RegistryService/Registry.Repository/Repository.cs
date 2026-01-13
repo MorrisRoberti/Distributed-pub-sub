@@ -4,6 +4,11 @@ namespace Registry.Repository;
 
 public class Repository(SubscriptionDbContext subscriptionDbContext) : IRepository
 {
+
+    public async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+    {
+        return await subscriptionDbContext.SaveChangesAsync(cancellationToken);
+    }
     public async Task CreateSubscriptionAsync(string UserId, string EventType, string CallbackUrl, CancellationToken cancellationToken = default)
     {
 

@@ -10,6 +10,8 @@ public class Business(IRepository repository, ILogger<Business> logger) : IBusin
     public async Task CreateSubscriptionAsync(SubscriptionDTO subscription, CancellationToken cancellationToken = default)
     {
         await repository.CreateSubscriptionAsync(subscription.UserId, subscription.EventType, subscription.CallbackUrl, cancellationToken);
+
+        await repository.SaveChangesAsync(cancellationToken);
     }
 
     public async Task<SubscriptionDTO?> GetSubscriptionAsync(int subscriptionId, CancellationToken cancellationToken = default)

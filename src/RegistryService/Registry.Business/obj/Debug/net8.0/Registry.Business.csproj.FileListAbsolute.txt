@@ -15,3 +15,4 @@
 /home/morris/Workspace/dotnet_projects/distributed_pub_sub/src/RegistryService/Registry.Business/obj/Debug/net8.0/refint/Registry.Business.dll
 /home/morris/Workspace/dotnet_projects/distributed_pub_sub/src/RegistryService/Registry.Business/obj/Debug/net8.0/Registry.Business.pdb
 /home/morris/Workspace/dotnet_projects/distributed_pub_sub/src/RegistryService/Registry.Business/obj/Debug/net8.0/ref/Registry.Business.dll
+/home/morris/Workspace/dotnet_projects/distributed_pub_sub/src/RegistryService/Registry.Business/obj/Debug/net8.0/Registry.Business.sourcelink.json
