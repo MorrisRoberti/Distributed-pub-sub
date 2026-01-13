@@ -47,7 +47,7 @@ public class SubscriptionController : ControllerBase
 
         if (sub is null)
         {
-            _logger.LogWarning($"HTTP GET: Subscription {SubscriptionId} not found");
+            _logger.LogWarning($"HTTP GET: Subscription {subscriptionId} not found");
             return NotFound(new { Message = $"Subscription {subscriptionId} not found" });
         }
 
@@ -66,7 +66,7 @@ public class SubscriptionController : ControllerBase
 
         if (sub is null)
         {
-            _logger.LogWarning($"HTTP PUT: Subscription {SubscriptionId} not found");
+            _logger.LogWarning($"HTTP PUT: Subscription {subscriptionId} not found");
             return NotFound(new { Message = $"Subscription {subscriptionId} not found" });
         }
 
@@ -86,7 +86,7 @@ public class SubscriptionController : ControllerBase
 
         if (!result)
         {
-            _logger.LogWarning($"HTTP DELETE: Subscription {SubscriptionId} not found");
+            _logger.LogWarning($"HTTP DELETE: Subscription {subscriptionId} not found");
             return NotFound(new { Message = $"Subscription {subscriptionId} not found" });
         }
 
