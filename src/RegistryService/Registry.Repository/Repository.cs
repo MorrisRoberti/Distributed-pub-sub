@@ -23,9 +23,13 @@ public class Repository(SubscriptionDbContext subscriptionDbContext) : IReposito
         return sub;
     }
 
-    public async Task<Subscription?> GetSubscriptionAsync(string subscriptionId, CancellationToken cancellationToken = default)
+    public async Task<Subscription?> GetSubscriptionAsync(Guid subscriptionId, CancellationToken cancellationToken = default)
     {
-        Guid subIdGuid = new Guid(subscriptionId);
-        return await subscriptionDbContext.Subscriptions.Where(s => s.Id == subIdGuid).FirstOrDefaultAsync(cancellationToken);
+        return await subscriptionDbContext.Subscriptions.Where(s => s.Id == subscriptionId).FirstOrDefaultAsync(cancellationToken);
+    }
+
+    public void DeleteSubscription(Subscription subscription)
+    {
+        subscriptionDbContext.Subscriptions.Remove(subscription);
     }
 }

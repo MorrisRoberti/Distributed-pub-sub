@@ -18,7 +18,7 @@ public class Business(IRepository repository, ILogger<Business> logger) : IBusin
         return subCreated.Id.ToString();
     }
 
-    public async Task<SubscriptionDTO?> GetSubscriptionAsync(string subscriptionId, CancellationToken cancellationToken = default)
+    public async Task<SubscriptionDTO?> GetSubscriptionAsync(Guid subscriptionId, CancellationToken cancellationToken = default)
     {
 
         var sub = await repository.GetSubscriptionAsync(subscriptionId);
@@ -35,5 +35,20 @@ public class Business(IRepository repository, ILogger<Business> logger) : IBusin
             IsActive = sub.IsActive,
             CreatedAt = sub.CreatedAt
         };
+    }
+
+    public async Task<bool> DeleteSubscriptionAsync(Guid subscriptionId, CancellationToken cancellationToken = default)
+    {
+        var sub = await repository.GetSubscriptionAsync(subscriptionId);
+
+        if (sub is null)
+            return false;
+
+
+        repository.DeleteSubscription(sub);
+
+        await repository.SaveChangesAsync(cancellationToken);
+
+        return true;
     }
 }

@@ -28,7 +28,7 @@ public class SubscriptionController : ControllerBase
     }
 
     [HttpGet(Name = "GetSubscription/{subscriptionId}")]
-    public async Task<ActionResult<SubscriptionDTO?>> GetSubscription(string subscriptionId)
+    public async Task<ActionResult<SubscriptionDTO?>> GetSubscription(Guid subscriptionId)
     {
         SubscriptionDTO? sub = await _business.GetSubscriptionAsync(subscriptionId);
         return sub;
@@ -41,9 +41,14 @@ public class SubscriptionController : ControllerBase
     }
 
 
-    [HttpDelete(Name = "DeleteSubscription")]
-    public ActionResult<SubscriptionDTO?> DeleteSubscription()
+    [HttpDelete(Name = "DeleteSubscription/{subscriptionId}")]
+    public async Task<ActionResult> DeleteSubscription(Guid subscriptionId)
     {
+        bool result = await _business.DeleteSubscriptionAsync(subscriptionId);
+
+        if (!result)
+            return NotFound(new { Message = $"Subscription {subscriptionId} not found" });
+
         return NoContent();
     }
 }
