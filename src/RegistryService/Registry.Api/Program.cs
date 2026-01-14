@@ -29,11 +29,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-
-// 2. Importante: abilita l'autorizzazione (anche se vuota per ora)
-app.UseAuthorization();
-
-// 3. Mappa i Controller. Questo sostituisce app.MapGet(...)
 app.MapControllers();
 
 app.Run();

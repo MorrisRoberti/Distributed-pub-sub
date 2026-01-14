@@ -1,11 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "hjqV+QOx5fUjOiSGqjAQejdJqnybBdaI4BG1NjGL+hoGy7E7hGEKuwPFpcXYs9QY0GSo8uTvCiJVWsaeblROPg==",
+  "dgSpecHash": "mdGn37Bdq+UHVL06h0zmjoFylbcLFqD2NZ1/go/s4IBCQ052u/L4z/fowlaMD3Jsc0fMmABR9CfJzbIC5NpYkA==",
   "success": true,
   "projectFilePath": "/home/morris/Workspace/dotnet_projects/distributed_pub_sub/src/RegistryService/Registry.Api/Registry.Api.csproj",
   "expectedPackageFiles": [
     "/home/morris/.nuget/packages/azure.core/1.25.0/azure.core.1.25.0.nupkg.sha512",
     "/home/morris/.nuget/packages/azure.identity/1.7.0/azure.identity.1.7.0.nupkg.sha512",
+    "/home/morris/.nuget/packages/confluent.kafka/2.13.0/confluent.kafka.2.13.0.nupkg.sha512",
+    "/home/morris/.nuget/packages/librdkafka.redist/2.13.0/librdkafka.redist.2.13.0.nupkg.sha512",
     "/home/morris/.nuget/packages/microsoft.aspnetcore.openapi/8.0.22/microsoft.aspnetcore.openapi.8.0.22.nupkg.sha512",
     "/home/morris/.nuget/packages/microsoft.bcl.asyncinterfaces/1.1.1/microsoft.bcl.asyncinterfaces.1.1.1.nupkg.sha512",
     "/home/morris/.nuget/packages/microsoft.csharp/4.5.0/microsoft.csharp.4.5.0.nupkg.sha512",

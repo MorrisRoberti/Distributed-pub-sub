@@ -9,13 +9,13 @@ namespace Registry.Business;
 public class Business(IRepository repository, ILogger<Business> logger) : IBusiness
 {
 
-    public async Task<string> CreateSubscriptionAsync(SubscriptionDTO subscription, CancellationToken cancellationToken = default)
+    public async Task<Guid> CreateSubscriptionAsync(SubscriptionDTO subscription, CancellationToken cancellationToken = default)
     {
         Subscription subCreated = await repository.CreateSubscriptionAsync(subscription.UserId, subscription.EventType, subscription.CallbackUrl, cancellationToken);
 
         await repository.SaveChangesAsync(cancellationToken);
 
-        return subCreated.Id.ToString();
+        return subCreated.Id;
     }
 
     public async Task<SubscriptionDTO?> GetSubscriptionAsync(Guid subscriptionId, CancellationToken cancellationToken = default)

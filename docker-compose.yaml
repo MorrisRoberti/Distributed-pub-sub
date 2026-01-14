@@ -1,5 +1,3 @@
-version: "3.8"
-
 services:
   # Unica istanza SQL Server per entrambi i DB
   sqlserver:

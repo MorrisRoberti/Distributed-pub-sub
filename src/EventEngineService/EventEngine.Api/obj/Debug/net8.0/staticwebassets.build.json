@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "oIUaY8BBLIr67pLnmM/mhiYrr6qKbPzvV++ya4JIvps=",
+  "Source": "EventEngine.Api",
+  "BasePath": "_content/EventEngine.Api",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

@@ -6,7 +6,7 @@ namespace Registry.Api.Controllers;
 
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/subscription")]
 public class SubscriptionController : ControllerBase
 {
 
@@ -19,19 +19,19 @@ public class SubscriptionController : ControllerBase
         _logger = logger;
     }
 
-    [HttpPost(Name = "CreateSubscription")]
-    public async Task<ActionResult<string>> CreateSubscription(SubscriptionDTO? subscription)
+    [HttpPost("subscribe", Name = "CreateSubscription")]
+    public async Task<ActionResult<Guid>> CreateSubscription(SubscriptionDTO? subscription)
     {
 
         if (subscription is null)
         {
-            _logger.LogWarning($"HTTP POST: subscriptionId was null");
+            _logger.LogWarning($"HTTP POST: subscription was null");
             return BadRequest();
         }
 
         _logger.LogInformation($"HTTP POST: Received request to create a subscription for User {subscription.UserId}");
 
-        string subId = await _business.CreateSubscriptionAsync(subscription);
+        Guid subId = await _business.CreateSubscriptionAsync(subscription);
 
         _logger.LogInformation($"HTTP POST: Successfully created subscription {subId}");
 

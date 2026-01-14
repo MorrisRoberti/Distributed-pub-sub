@@ -1,0 +1,16 @@
+/home/morris/Workspace/dotnet_projects/distributed_pub_sub/src/EventEngineService/EventEngine.Repository/obj/Debug/net8.0/EventEngine.Repository.csproj.AssemblyReference.cache
+/home/morris/Workspace/dotnet_projects/distributed_pub_sub/src/EventEngineService/EventEngine.Repository/obj/Debug/net8.0/EventEngine.Repository.GeneratedMSBuildEditorConfig.editorconfig
+/home/morris/Workspace/dotnet_projects/distributed_pub_sub/src/EventEngineService/EventEngine.Repository/obj/Debug/net8.0/EventEngine.Repository.AssemblyInfoInputs.cache
+/home/morris/Workspace/dotnet_projects/distributed_pub_sub/src/EventEngineService/EventEngine.Repository/obj/Debug/net8.0/EventEngine.Repository.AssemblyInfo.cs
+/home/morris/Workspace/dotnet_projects/distributed_pub_sub/src/EventEngineService/EventEngine.Repository/obj/Debug/net8.0/EventEngine.Repository.csproj.CoreCompileInputs.cache
+/home/morris/Workspace/dotnet_projects/distributed_pub_sub/src/EventEngineService/EventEngine.Repository/obj/Debug/net8.0/EventEngine.Repository.sourcelink.json
+/home/morris/Workspace/dotnet_projects/distributed_pub_sub/src/EventEngineService/EventEngine.Repository/bin/Debug/net8.0/EventEngine.Repository.deps.json
+/home/morris/Workspace/dotnet_projects/distributed_pub_sub/src/EventEngineService/EventEngine.Repository/bin/Debug/net8.0/EventEngine.Repository.dll
+/home/morris/Workspace/dotnet_projects/distributed_pub_sub/src/EventEngineService/EventEngine.Repository/bin/Debug/net8.0/EventEngine.Repository.pdb
+/home/morris/Workspace/dotnet_projects/distributed_pub_sub/src/EventEngineService/EventEngine.Repository/bin/Debug/net8.0/EventEngine.Shared.dll
+/home/morris/Workspace/dotnet_projects/distributed_pub_sub/src/EventEngineService/EventEngine.Repository/bin/Debug/net8.0/EventEngine.Shared.pdb
+/home/morris/Workspace/dotnet_projects/distributed_pub_sub/src/EventEngineService/EventEngine.Repository/obj/Debug/net8.0/EventEngine.Repository.csproj.CopyComplete
+/home/morris/Workspace/dotnet_projects/distributed_pub_sub/src/EventEngineService/EventEngine.Repository/obj/Debug/net8.0/EventEngine.Repository.dll
+/home/morris/Workspace/dotnet_projects/distributed_pub_sub/src/EventEngineService/EventEngine.Repository/obj/Debug/net8.0/refint/EventEngine.Repository.dll
+/home/morris/Workspace/dotnet_projects/distributed_pub_sub/src/EventEngineService/EventEngine.Repository/obj/Debug/net8.0/EventEngine.Repository.pdb
+/home/morris/Workspace/dotnet_projects/distributed_pub_sub/src/EventEngineService/EventEngine.Repository/obj/Debug/net8.0/ref/EventEngine.Repository.dll
