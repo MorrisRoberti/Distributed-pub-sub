@@ -28,6 +28,7 @@ public class Business(IRepository repository, ILogger<Business> logger) : IBusin
         }
         catch (Exception ex)
         {
+            logger.LogError("Error while creating subscription on db");
             await transaction.RollbackAsync();
             throw;
         }

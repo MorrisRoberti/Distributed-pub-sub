@@ -15,6 +15,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IBusiness, Business>();
 builder.Services.AddScoped<IRepository, Repository>();
 builder.Services.AddSingleton<ProducerServiceWithSubscription>();
+builder.Services.AddHostedService<OutboxWorker>();
 
 var app = builder.Build();
 

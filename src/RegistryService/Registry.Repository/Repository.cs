@@ -31,6 +31,23 @@ public class Repository(SubscriptionDbContext subscriptionDbContext) : IReposito
 
         await subscriptionDbContext.OutboxMessages.AddAsync(outboxMessage);
     }
+    public async Task<IEnumerable<OutboxMessage>> GetPendingOutboxMessagesAsync()
+    {
+        return await subscriptionDbContext.Set<OutboxMessage>()
+            .Where(x => x.ProcessedOnUtc == null)
+            .OrderBy(x => x.OccurredOnUtc)
+            .ToListAsync();
+    }
+
+    public async Task MarkOutboxMessageAsProcessedAsync(Guid id)
+    {
+        var message = await subscriptionDbContext.Set<OutboxMessage>().FindAsync(id);
+        if (message != null)
+        {
+            message.ProcessedOnUtc = DateTime.UtcNow;
+            await subscriptionDbContext.SaveChangesAsync();
+        }
+    }
     public async Task<Subscription> CreateSubscriptionAsync(string UserId, string EventType, string CallbackUrl, CancellationToken cancellationToken = default)
     {
 

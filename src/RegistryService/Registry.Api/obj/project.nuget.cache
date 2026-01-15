@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "mdGn37Bdq+UHVL06h0zmjoFylbcLFqD2NZ1/go/s4IBCQ052u/L4z/fowlaMD3Jsc0fMmABR9CfJzbIC5NpYkA==",
+  "dgSpecHash": "MDAZXYuuIrvs6CMzYn8xUvrFpHOlnhBGKTv0Ig4JF2eE7MuCWE6fyL+nFq/o9FyKD23ggFfHEhMwdz4wQJymdQ==",
   "success": true,
   "projectFilePath": "/home/morris/Workspace/dotnet_projects/distributed_pub_sub/src/RegistryService/Registry.Api/Registry.Api.csproj",
   "expectedPackageFiles": [
@@ -24,6 +24,9 @@
     "/home/morris/.nuget/packages/microsoft.extensions.configuration.abstractions/8.0.0/microsoft.extensions.configuration.abstractions.8.0.0.nupkg.sha512",
     "/home/morris/.nuget/packages/microsoft.extensions.dependencyinjection/8.0.0/microsoft.extensions.dependencyinjection.8.0.0.nupkg.sha512",
     "/home/morris/.nuget/packages/microsoft.extensions.dependencyinjection.abstractions/10.0.1/microsoft.extensions.dependencyinjection.abstractions.10.0.1.nupkg.sha512",
+    "/home/morris/.nuget/packages/microsoft.extensions.diagnostics.abstractions/8.0.0/microsoft.extensions.diagnostics.abstractions.8.0.0.nupkg.sha512",
+    "/home/morris/.nuget/packages/microsoft.extensions.fileproviders.abstractions/8.0.0/microsoft.extensions.fileproviders.abstractions.8.0.0.nupkg.sha512",
+    "/home/morris/.nuget/packages/microsoft.extensions.hosting.abstractions/8.0.0/microsoft.extensions.hosting.abstractions.8.0.0.nupkg.sha512",
     "/home/morris/.nuget/packages/microsoft.extensions.logging/8.0.0/microsoft.extensions.logging.8.0.0.nupkg.sha512",
     "/home/morris/.nuget/packages/microsoft.extensions.logging.abstractions/10.0.1/microsoft.extensions.logging.abstractions.10.0.1.nupkg.sha512",
     "/home/morris/.nuget/packages/microsoft.extensions.options/8.0.0/microsoft.extensions.options.8.0.0.nupkg.sha512",
