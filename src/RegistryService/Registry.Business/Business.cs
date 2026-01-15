@@ -11,11 +11,26 @@ public class Business(IRepository repository, ILogger<Business> logger) : IBusin
 
     public async Task<Guid> CreateSubscriptionAsync(SubscriptionDTO subscription, CancellationToken cancellationToken = default)
     {
-        Subscription subCreated = await repository.CreateSubscriptionAsync(subscription.UserId, subscription.EventType, subscription.CallbackUrl, cancellationToken);
 
-        await repository.SaveChangesAsync(cancellationToken);
+        using var transaction = await repository.BeginTransactionAsync();
+        try
+        {
 
-        return subCreated.Id;
+            Subscription subCreated = await repository.CreateSubscriptionAsync(subscription.UserId, subscription.EventType, subscription.CallbackUrl, cancellationToken);
+
+            await repository.AddOutboxMessageAsync(subscription);
+
+            await repository.SaveChangesAsync(cancellationToken);
+
+            await transaction.CommitAsync();
+
+            return subCreated.Id;
+        }
+        catch (Exception ex)
+        {
+            await transaction.RollbackAsync();
+            throw;
+        }
     }
 
     public async Task<SubscriptionDTO?> GetSubscriptionAsync(Guid subscriptionId, CancellationToken cancellationToken = default)

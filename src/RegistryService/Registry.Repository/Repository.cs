@@ -1,6 +1,9 @@
 ﻿using Registry.Repository.Abstractions;
 using Registry.Repository.Models;
+using Registry.Shared;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
+using System.Text.Json;
 namespace Registry.Repository;
 
 public class Repository(SubscriptionDbContext subscriptionDbContext) : IRepository
@@ -9,6 +12,24 @@ public class Repository(SubscriptionDbContext subscriptionDbContext) : IReposito
     public async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
         return await subscriptionDbContext.SaveChangesAsync(cancellationToken);
+    }
+
+    public async Task<IDbContextTransaction> BeginTransactionAsync()
+    {
+        return await subscriptionDbContext.Database.BeginTransactionAsync();
+    }
+
+    public async Task AddOutboxMessageAsync(SubscriptionDTO subscription)
+    {
+        var outboxMessage = new OutboxMessage
+        {
+            Id = Guid.NewGuid(),
+            Type = "SubscriptionCreated",
+            Payload = JsonSerializer.Serialize(subscription),
+            OccurredOnUtc = DateTime.UtcNow
+        };
+
+        await subscriptionDbContext.OutboxMessages.AddAsync(outboxMessage);
     }
     public async Task<Subscription> CreateSubscriptionAsync(string UserId, string EventType, string CallbackUrl, CancellationToken cancellationToken = default)
     {

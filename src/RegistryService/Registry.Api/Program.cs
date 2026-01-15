@@ -1,6 +1,7 @@
 using Registry.Business;
 using Registry.Repository;
 using Registry.Business.Abstractions;
+using Registry.Business.Kafka;
 using Registry.Repository.Abstractions;
 using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
@@ -13,12 +14,14 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IBusiness, Business>();
 builder.Services.AddScoped<IRepository, Repository>();
+builder.Services.AddSingleton<ProducerServiceWithSubscription>();
 
 var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
 {
     var context = scope.ServiceProvider.GetRequiredService<SubscriptionDbContext>();
+    context.Database.EnsureDeleted();
     context.Database.EnsureCreated();
 }
 
