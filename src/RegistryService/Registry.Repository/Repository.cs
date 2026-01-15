@@ -19,7 +19,7 @@ public class Repository(SubscriptionDbContext subscriptionDbContext) : IReposito
         return await subscriptionDbContext.Database.BeginTransactionAsync();
     }
 
-    public async Task AddOutboxMessageAsync(SubscriptionDTO subscription)
+    public async Task AddOutboxMessageAsync(Subscription subscription)
     {
         var outboxMessage = new OutboxMessage
         {

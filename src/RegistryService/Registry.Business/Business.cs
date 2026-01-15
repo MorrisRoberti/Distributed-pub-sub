@@ -18,7 +18,7 @@ public class Business(IRepository repository, ILogger<Business> logger) : IBusin
 
             Subscription subCreated = await repository.CreateSubscriptionAsync(subscription.UserId, subscription.EventType, subscription.CallbackUrl, cancellationToken);
 
-            await repository.AddOutboxMessageAsync(subscription);
+            await repository.AddOutboxMessageAsync(subCreated);
 
             await repository.SaveChangesAsync(cancellationToken);
 

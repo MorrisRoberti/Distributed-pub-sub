@@ -1,4 +1,5 @@
 using EventEngine.Business;
+using EventEngine.Business.Kafka;
 using EventEngine.Repository;
 using EventEngine.Business.Abstractions;
 using EventEngine.Repository.Abstractions;
@@ -13,12 +14,14 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IBusiness, Business>();
 builder.Services.AddScoped<IRepository, Repository>();
+builder.Services.AddHostedService<SubscriptionConsumerWorker>();
 
 var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
 {
     var context = scope.ServiceProvider.GetRequiredService<EventEngineDbContext>();
+    context.Database.EnsureDeleted();
     context.Database.EnsureCreated();
 }
 

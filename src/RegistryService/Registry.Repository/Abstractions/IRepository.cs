@@ -9,7 +9,7 @@ public interface IRepository
 
     Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
     Task<IDbContextTransaction> BeginTransactionAsync();
-    Task AddOutboxMessageAsync(SubscriptionDTO subscription);
+    Task AddOutboxMessageAsync(Subscription subscription);
     Task<IEnumerable<OutboxMessage>> GetPendingOutboxMessagesAsync();
     Task MarkOutboxMessageAsProcessedAsync(Guid id);
     Task<Subscription> CreateSubscriptionAsync(string UserId, string EventType, string CallbackUrl, CancellationToken cancellationToken = default);
