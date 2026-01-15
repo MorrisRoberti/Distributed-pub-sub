@@ -53,6 +53,8 @@ public class SubscriptionConsumerWorker : BackgroundService
 
                             // deserialize the data and update the db through ProcessMessage
                             SubscriptionDTO? subscription = JsonSerializer.Deserialize<SubscriptionDTO>(result.Message.Value);
+
+
                             if (subscription != null)
                             {
 

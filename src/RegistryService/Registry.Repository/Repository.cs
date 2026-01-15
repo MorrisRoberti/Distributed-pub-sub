@@ -19,13 +19,14 @@ public class Repository(SubscriptionDbContext subscriptionDbContext) : IReposito
         return await subscriptionDbContext.Database.BeginTransactionAsync();
     }
 
-    public async Task AddOutboxMessageAsync(Subscription subscription)
+    public async Task AddOutboxMessageAsync(Subscription subscription, string operation)
     {
+
         var outboxMessage = new OutboxMessage
         {
             Id = Guid.NewGuid(),
             SubscriptionId = subscription.Id,
-            Type = "SubscriptionCreated",
+            Type = $"Subscription{operation}",
             Payload = JsonSerializer.Serialize(subscription),
             OccurredOnUtc = DateTime.UtcNow
         };
@@ -65,14 +66,11 @@ public class Repository(SubscriptionDbContext subscriptionDbContext) : IReposito
 
     public async Task<Subscription?> GetSubscriptionAsync(Guid subscriptionId, CancellationToken cancellationToken = default)
     {
-        return await subscriptionDbContext.Subscriptions.Where(s => s.Id == subscriptionId).FirstOrDefaultAsync(cancellationToken);
+        return await subscriptionDbContext.Subscriptions.Where(s => s.Id == subscriptionId && s.DeletedAt == null).FirstOrDefaultAsync(cancellationToken);
     }
     public void UpdateSubscription(Subscription subscription)
     {
         subscriptionDbContext.Subscriptions.Update(subscription);
     }
-    public void DeleteSubscription(Subscription subscription)
-    {
-        subscriptionDbContext.Subscriptions.Remove(subscription);
-    }
+
 }

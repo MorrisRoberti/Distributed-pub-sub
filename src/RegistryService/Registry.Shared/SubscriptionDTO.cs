@@ -19,4 +19,6 @@ public class SubscriptionDTO
     public bool IsActive { get; set; } = true;
     [JsonIgnore]
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+
+    public DateTime? DeletedAt { get; set; } = DateTime.UtcNow;
 }

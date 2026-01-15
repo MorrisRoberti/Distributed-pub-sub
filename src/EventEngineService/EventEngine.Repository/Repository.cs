@@ -30,7 +30,7 @@ public class Repository(EventEngineDbContext eventEngineDbContext) : IRepository
 
         // i search the current Subscription to see if it already exists
         Subscription? existing = await eventEngineDbContext.Subscriptions
-            .FirstOrDefaultAsync(s => s.Id == subscription.Id);
+            .FirstOrDefaultAsync(s => s.Id == subscription.Id && s.DeletedAt == null);
 
         if (existing == null)
         {
@@ -46,12 +46,24 @@ public class Repository(EventEngineDbContext eventEngineDbContext) : IRepository
         }
         else
         {
-            // the Subscription is already present, I update the necessary fields
-            // NOTE: This is a Put so all fields should be populated
-            existing.EventType = subscription.EventType;
-            existing.CallbackUrl = subscription.CallbackUrl;
-            existing.IsActive = subscription.IsActive;
-            existing.UpdatedAt = DateTime.UtcNow;
+
+            // here i know for sure that the subscription exists
+            if (subscription.DeletedAt != null)
+            {
+                existing.DeletedAt = DateTime.UtcNow;
+                existing.IsActive = false;
+
+            }
+            else
+            {
+
+                // the Subscription is already present, I update the necessary fields
+                // NOTE: This is a Put so all fields should be populated
+                existing.EventType = subscription.EventType;
+                existing.CallbackUrl = subscription.CallbackUrl;
+                existing.IsActive = subscription.IsActive;
+                existing.UpdatedAt = DateTime.UtcNow;
+            }
         }
 
         await eventEngineDbContext.SaveChangesAsync();
