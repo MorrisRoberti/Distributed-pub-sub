@@ -24,6 +24,7 @@ public class Repository(SubscriptionDbContext subscriptionDbContext) : IReposito
         var outboxMessage = new OutboxMessage
         {
             Id = Guid.NewGuid(),
+            SubscriptionId = subscription.Id,
             Type = "SubscriptionCreated",
             Payload = JsonSerializer.Serialize(subscription),
             OccurredOnUtc = DateTime.UtcNow
@@ -31,6 +32,7 @@ public class Repository(SubscriptionDbContext subscriptionDbContext) : IReposito
 
         await subscriptionDbContext.OutboxMessages.AddAsync(outboxMessage);
     }
+
     public async Task<IEnumerable<OutboxMessage>> GetPendingOutboxMessagesAsync()
     {
         return await subscriptionDbContext.Set<OutboxMessage>()

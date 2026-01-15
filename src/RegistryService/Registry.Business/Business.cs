@@ -67,6 +67,8 @@ public class Business(IRepository repository, ILogger<Business> logger) : IBusin
 
         repository.UpdateSubscription(sub);
 
+        await repository.AddOutboxMessageAsync(sub);
+
         await repository.SaveChangesAsync(cancellationToken);
 
         return new SubscriptionDTO

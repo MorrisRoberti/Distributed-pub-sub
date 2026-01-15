@@ -8,6 +8,7 @@ public class Subscription
 {
     [Key]
     public Guid Id { get; set; }
+    public bool IsActive { get; set; } = true;
 
     [Required]
     public string EventType { get; set; } = string.Empty;

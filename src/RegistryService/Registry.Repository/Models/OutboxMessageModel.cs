@@ -9,6 +9,8 @@ public class OutboxMessage
     [Key]
     public Guid Id { get; set; }
 
+    public Guid SubscriptionId { get; set; }
+
     [Required]
     public string Type { get; set; } = string.Empty;
 

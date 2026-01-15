@@ -40,15 +40,17 @@ public class Repository(EventEngineDbContext eventEngineDbContext) : IRepository
                 // to be consistent I use the same id of the Subscription coming from the RegistryService
                 Id = subscription.Id,
                 EventType = subscription.EventType,
-                CallbackUrl = subscription.CallbackUrl,
+                CallbackUrl = subscription.CallbackUrl
             };
             eventEngineDbContext.Subscriptions.Add(newSub);
         }
         else
         {
             // the Subscription is already present, I update the necessary fields
+            // NOTE: This is a Put so all fields should be populated
             existing.EventType = subscription.EventType;
             existing.CallbackUrl = subscription.CallbackUrl;
+            existing.IsActive = subscription.IsActive;
             existing.UpdatedAt = DateTime.UtcNow;
         }
 
