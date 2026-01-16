@@ -1,0 +1,111 @@
+{
+  "version": 3,
+  "targets": {
+    "net8.0": {
+      "Identity.Repository/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "dependencies": {
+          "Identity.Shared": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/Identity.Repository.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Identity.Repository.dll": {}
+        }
+      },
+      "Identity.Shared/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "compile": {
+          "bin/placeholder/Identity.Shared.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Identity.Shared.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Identity.Repository/1.0.0": {
+      "type": "project",
+      "path": "../Identity.Repository/Identity.Repository.csproj",
+      "msbuildProject": "../Identity.Repository/Identity.Repository.csproj"
+    },
+    "Identity.Shared/1.0.0": {
+      "type": "project",
+      "path": "../Identity.Shared/Identity.Shared.csproj",
+      "msbuildProject": "../Identity.Shared/Identity.Shared.csproj"
+    }
+  },
+  "projectFileDependencyGroups": {
+    "net8.0": [
+      "Identity.Repository >= 1.0.0",
+      "Identity.Shared >= 1.0.0"
+    ]
+  },
+  "packageFolders": {
+    "/home/morris/.nuget/packages/": {}
+  },
+  "project": {
+    "version": "1.0.0",
+    "restore": {
+      "projectUniqueName": "/home/morris/Workspace/dotnet_projects/distributed_pub_sub/src/IdentityService/Identity.Business/Identity.Business.csproj",
+      "projectName": "Identity.Business",
+      "projectPath": "/home/morris/Workspace/dotnet_projects/distributed_pub_sub/src/IdentityService/Identity.Business/Identity.Business.csproj",
+      "packagesPath": "/home/morris/.nuget/packages/",
+      "outputPath": "/home/morris/Workspace/dotnet_projects/distributed_pub_sub/src/IdentityService/Identity.Business/obj/",
+      "projectStyle": "PackageReference",
+      "configFilePaths": [
+        "/home/morris/.nuget/NuGet/NuGet.Config"
+      ],
+      "originalTargetFrameworks": [
+        "net8.0"
+      ],
+      "sources": {
+        "https://api.nuget.org/v3/index.json": {}
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "projectReferences": {
+            "/home/morris/Workspace/dotnet_projects/distributed_pub_sub/src/IdentityService/Identity.Repository/Identity.Repository.csproj": {
+              "projectPath": "/home/morris/Workspace/dotnet_projects/distributed_pub_sub/src/IdentityService/Identity.Repository/Identity.Repository.csproj"
+            },
+            "/home/morris/Workspace/dotnet_projects/distributed_pub_sub/src/IdentityService/Identity.Shared/Identity.Shared.csproj": {
+              "projectPath": "/home/morris/Workspace/dotnet_projects/distributed_pub_sub/src/IdentityService/Identity.Shared/Identity.Shared.csproj"
+            }
+          }
+        }
+      },
+      "warningProperties": {
+        "warnAsError": [
+          "NU1605"
+        ]
+      }
+    },
+    "frameworks": {
+      "net8.0": {
+        "targetAlias": "net8.0",
+        "imports": [
+          "net461",
+          "net462",
+          "net47",
+          "net471",
+          "net472",
+          "net48",
+          "net481"
+        ],
+        "assetTargetFallback": true,
+        "warn": true,
+        "frameworkReferences": {
+          "Microsoft.NETCore.App": {
+            "privateAssets": "all"
+          }
+        },
+        "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/8.0.122/PortableRuntimeIdentifierGraph.json"
+      }
+    }
+  }
+}
