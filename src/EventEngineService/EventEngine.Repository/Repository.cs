@@ -31,7 +31,7 @@ public class Repository(EventEngineDbContext eventEngineDbContext) : IRepository
 
         // i search the current Subscription to see if it already exists
         Subscription? existing = await eventEngineDbContext.Subscriptions
-            .FirstOrDefaultAsync(s => s.Id == subscription.Id && s.DeletedAt == null);
+            .FirstOrDefaultAsync(s => s.Id == subscription.Id);
 
         if (existing == null)
         {

@@ -43,12 +43,12 @@ public class Business(IRepository repository, ILogger<Business> logger) : IBusin
             }
             else
             {
-                return (null, "Expired Token");
+                return (null, "Requests finished");
             }
         }
         else
         {
-            return (null, "Requests finished");
+            return (null, "Expired Token");
         }
 
     }
