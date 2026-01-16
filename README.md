@@ -2,6 +2,17 @@
 
 > This is a distibuted version of the Publisher/Subscriber pattern.
 
+# Run the project
+
+To run the project move in `distributed_pub_su` and launch `docker compose up`.
+The microservices can be found at:
+
+- RegistryService -> `http://localhost:5000/swagger/index.html`
+- IdentityService -> `http://localhost:5001/swagger/index.html`
+- EventEngineService -> `http://localhost:5002/swagger/index.html`
+
+> Note that the IdentityService is not supposed to be esposed outside, the swagger is just for documentation.
+
 # Create a new service
 
 To create a new service in the project, move in `distributed_pub_sub/src` and paste the following in your terminal
