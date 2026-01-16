@@ -1375,6 +1375,7 @@
         "framework": ".NETCoreApp,Version=v8.0",
         "dependencies": {
           "Confluent.Kafka": "2.13.0",
+          "EventEngine.ClientHttp": "1.0.0",
           "EventEngine.Repository": "1.0.0",
           "EventEngine.Shared": "1.0.0",
           "Microsoft.EntityFrameworkCore": "8.0.0",
@@ -1387,6 +1388,19 @@
         },
         "runtime": {
           "bin/placeholder/EventEngine.Business.dll": {}
+        }
+      },
+      "EventEngine.ClientHttp/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "dependencies": {
+          "Microsoft.Extensions.Http": "10.0.2"
+        },
+        "compile": {
+          "bin/placeholder/EventEngine.ClientHttp.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/EventEngine.ClientHttp.dll": {}
         }
       },
       "EventEngine.Repository/1.0.0": {
@@ -3870,6 +3884,11 @@
       "type": "project",
       "path": "../EventEngine.Business/EventEngine.Business.csproj",
       "msbuildProject": "../EventEngine.Business/EventEngine.Business.csproj"
+    },
+    "EventEngine.ClientHttp/1.0.0": {
+      "type": "project",
+      "path": "../EventEngine.ClientHttp/EventEngine.ClientHttp.csproj",
+      "msbuildProject": "../EventEngine.ClientHttp/EventEngine.ClientHttp.csproj"
     },
     "EventEngine.Repository/1.0.0": {
       "type": "project",

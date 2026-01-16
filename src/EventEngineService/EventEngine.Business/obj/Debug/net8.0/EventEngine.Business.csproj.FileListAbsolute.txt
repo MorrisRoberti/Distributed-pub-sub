@@ -16,3 +16,5 @@
 /home/morris/Workspace/dotnet_projects/distributed_pub_sub/src/EventEngineService/EventEngine.Business/obj/Debug/net8.0/refint/EventEngine.Business.dll
 /home/morris/Workspace/dotnet_projects/distributed_pub_sub/src/EventEngineService/EventEngine.Business/obj/Debug/net8.0/EventEngine.Business.pdb
 /home/morris/Workspace/dotnet_projects/distributed_pub_sub/src/EventEngineService/EventEngine.Business/obj/Debug/net8.0/ref/EventEngine.Business.dll
+/home/morris/Workspace/dotnet_projects/distributed_pub_sub/src/EventEngineService/EventEngine.Business/bin/Debug/net8.0/EventEngine.ClientHttp.dll
+/home/morris/Workspace/dotnet_projects/distributed_pub_sub/src/EventEngineService/EventEngine.Business/bin/Debug/net8.0/EventEngine.ClientHttp.pdb

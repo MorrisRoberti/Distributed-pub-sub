@@ -9,6 +9,7 @@
       "EventEngine.Business/1.0.0": {
         "dependencies": {
           "Confluent.Kafka": "2.13.0",
+          "EventEngine.ClientHttp": "1.0.0",
           "EventEngine.Repository": "1.0.0",
           "EventEngine.Shared": "1.0.0",
           "Microsoft.EntityFrameworkCore": "8.0.0",
@@ -804,6 +805,14 @@
           }
         }
       },
+      "EventEngine.ClientHttp/1.0.0": {
+        "dependencies": {
+          "Microsoft.Extensions.Http": "10.0.2"
+        },
+        "runtime": {
+          "EventEngine.ClientHttp.dll": {}
+        }
+      },
       "EventEngine.Repository/1.0.0": {
         "dependencies": {
           "EventEngine.Shared": "1.0.0",
@@ -1282,6 +1291,11 @@
       "sha512": "sha512-IXoJOXIqc39AIe+CIR7koBtRGMiCt/LPM3lI+PELtDIy9XdyeSrwXFdWV9dzJ2Awl0paLWUaknLxFQ5HpHZUog==",
       "path": "system.windows.extensions/6.0.0",
       "hashPath": "system.windows.extensions.6.0.0.nupkg.sha512"
+    },
+    "EventEngine.ClientHttp/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
     },
     "EventEngine.Repository/1.0.0": {
       "type": "project",

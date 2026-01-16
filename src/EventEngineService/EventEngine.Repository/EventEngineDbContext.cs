@@ -27,13 +27,21 @@ public class EventEngineDbContext(DbContextOptions<EventEngineDbContext> dbConte
         {
             entity.HasKey(e => e.Id);
 
+            // association with Events
             entity.HasOne(d => d.Event)
                   .WithMany()
                   .HasForeignKey(d => d.EventId)
                   .OnDelete(DeleteBehavior.Cascade); // actually it's useless because it should not be possible to delete an Event
 
             entity.Property(e => e.DispatchedAt).HasDefaultValueSql("GETUTCDATE()");
+
+            // associtation with Subscriptions
+            entity.HasOne(d => d.Subscription)
+                  .WithMany()
+                  .HasForeignKey(d => d.SubscriptionId)
+                  .OnDelete(DeleteBehavior.NoAction); // not deleting the logs if the subscription is deleted
         });
+
     }
 
     public DbSet<Subscription> Subscriptions { get; set; }

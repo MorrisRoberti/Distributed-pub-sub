@@ -3,6 +3,7 @@
   <ItemGroup>
     <ProjectReference Include="..\EventEngine.Repository\EventEngine.Repository.csproj" />
     <ProjectReference Include="..\EventEngine.Shared\EventEngine.Shared.csproj" />
+    <ProjectReference Include="..\EventEngine.ClientHttp\EventEngine.ClientHttp.csproj" />
   </ItemGroup>
 
   <ItemGroup>

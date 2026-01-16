@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/home/morris/Workspace/dotnet_projects/test_prj/distributed_pub_sub/src/EventEngineService/EventEngine.ClientHttp/EventEngine.ClientHttp.csproj": {}
+    "/home/morris/Workspace/dotnet_projects/distributed_pub_sub/src/EventEngineService/EventEngine.ClientHttp/EventEngine.ClientHttp.csproj": {}
   },
   "projects": {
-    "/home/morris/Workspace/dotnet_projects/test_prj/distributed_pub_sub/src/EventEngineService/EventEngine.ClientHttp/EventEngine.ClientHttp.csproj": {
+    "/home/morris/Workspace/dotnet_projects/distributed_pub_sub/src/EventEngineService/EventEngine.ClientHttp/EventEngine.ClientHttp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/morris/Workspace/dotnet_projects/test_prj/distributed_pub_sub/src/EventEngineService/EventEngine.ClientHttp/EventEngine.ClientHttp.csproj",
+        "projectUniqueName": "/home/morris/Workspace/dotnet_projects/distributed_pub_sub/src/EventEngineService/EventEngine.ClientHttp/EventEngine.ClientHttp.csproj",
         "projectName": "EventEngine.ClientHttp",
-        "projectPath": "/home/morris/Workspace/dotnet_projects/test_prj/distributed_pub_sub/src/EventEngineService/EventEngine.ClientHttp/EventEngine.ClientHttp.csproj",
+        "projectPath": "/home/morris/Workspace/dotnet_projects/distributed_pub_sub/src/EventEngineService/EventEngine.ClientHttp/EventEngine.ClientHttp.csproj",
         "packagesPath": "/home/morris/.nuget/packages/",
-        "outputPath": "/home/morris/Workspace/dotnet_projects/test_prj/distributed_pub_sub/src/EventEngineService/EventEngine.ClientHttp/obj/",
+        "outputPath": "/home/morris/Workspace/dotnet_projects/distributed_pub_sub/src/EventEngineService/EventEngine.ClientHttp/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/home/morris/.nuget/NuGet/NuGet.Config"
@@ -37,6 +37,12 @@
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
+          "dependencies": {
+            "Microsoft.Extensions.Http": {
+              "target": "Package",
+              "version": "[10.0.2, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",

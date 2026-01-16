@@ -84,14 +84,13 @@ public class Repository(EventEngineDbContext eventEngineDbContext) : IRepository
                 .ToListAsync(cancellationToken);
     }
 
-    public async Task<DispatchLog> CreateDispatchLogAsync(Guid eventId, CancellationToken cancellationToken = default)
+    public async Task<DispatchLog> CreateDispatchLogAsync(Guid eventId, Guid subscriptionId, CancellationToken cancellationToken = default)
     {
         DispatchLog newLog = new DispatchLog
         {
             Id = Guid.NewGuid(),
             EventId = eventId,
-            // Ti consiglio di aggiungere SubscriptionId alla tabella per tracciare a chi mandi cosa
-            // SubscriptionId = sub.Id, 
+            SubscriptionId = subscriptionId,
             Status = "PENDING", // actually PENDING is already the default value, but i leave it for clarity's sake
             Attempts = 0, // same as above
             DispatchedAt = DateTime.UtcNow
@@ -99,5 +98,21 @@ public class Repository(EventEngineDbContext eventEngineDbContext) : IRepository
 
         await eventEngineDbContext.DispatchLogs.AddAsync(newLog, cancellationToken);
         return newLog;
+    }
+
+    public async Task<IEnumerable<DispatchLog>> GetPendingDispatchLogsAsync(CancellationToken cancellationToken)
+    {
+        return await eventEngineDbContext.DispatchLogs
+             .Include(l => l.Event)
+             .Where(l => l.Status == "PENDING" || l.Status == "FAILED" && l.Attempts < 3)
+             .ToListAsync(cancellationToken);
+    }
+
+    public async Task<string> GetCallbackUrlOfSubscription(Guid subscriptionId, CancellationToken cancellationToken)
+    {
+        return await eventEngineDbContext.Subscriptions
+                .Where(s => s.Id == subscriptionId)
+                .Select(s => s.CallbackUrl)
+                .FirstOrDefaultAsync(cancellationToken);
     }
 }

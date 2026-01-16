@@ -11,5 +11,7 @@ public interface IRepository
     Task UpsertSubscriptionAsync(SubscriptionDTO dto);
     Task<IEnumerable<Event>> GetUnprocessedEventsAsync(CancellationToken cancellationToken);
     Task<IEnumerable<Subscription>> GetSubscriptionsFromEventTypeAsync(string eventType, CancellationToken cancellationToken);
-    Task<DispatchLog> CreateDispatchLogAsync(Guid eventId, CancellationToken cancellationToken = default);
+    Task<DispatchLog> CreateDispatchLogAsync(Guid eventId, Guid subscriptionId, CancellationToken cancellationToken = default);
+    Task<IEnumerable<DispatchLog>> GetPendingDispatchLogsAsync(CancellationToken cancellationToken);
+    Task<string> GetCallbackUrlOfSubscription(Guid subscriptionId, CancellationToken cancellationToken);
 }

@@ -12,6 +12,11 @@ public class DispatchLog
 
     [ForeignKey("ReceivedEventId")]
     public virtual Event? Event { get; set; }
+
+    public Guid SubscriptionId { get; set; }
+
+    [ForeignKey("SubscriptionId")]
+    public virtual Subscription? Subscription { get; set; }
     public string Status { get; set; } = "PENDING";
     public int Attempts { get; set; } = 0;
     public DateTime DispatchedAt { get; set; } = DateTime.UtcNow;

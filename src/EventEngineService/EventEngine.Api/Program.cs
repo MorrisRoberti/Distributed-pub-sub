@@ -3,6 +3,9 @@ using EventEngine.Business.Kafka;
 using EventEngine.Repository;
 using EventEngine.Business.Abstractions;
 using EventEngine.Repository.Abstractions;
+using EventEngine.ClientHttp;
+using EventEngine.ClientHttp.Abstractions;
+
 using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +19,14 @@ builder.Services.AddScoped<IBusiness, Business>();
 builder.Services.AddScoped<IRepository, Repository>();
 builder.Services.AddHostedService<SubscriptionConsumerWorker>();
 builder.Services.AddHostedService<DispatchService>();
+
+builder.Services.AddHttpClient("ClientHttp", client =>
+{
+    // if the client doesn't reply in 10 seconds close the connection
+    client.Timeout = TimeSpan.FromSeconds(10);
+});
+
+builder.Services.AddScoped<IClientHttp, ClientHttp>();
 
 var app = builder.Build();
 

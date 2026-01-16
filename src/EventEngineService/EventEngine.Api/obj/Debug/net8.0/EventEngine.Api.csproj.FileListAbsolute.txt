@@ -117,3 +117,5 @@
 /home/morris/Workspace/dotnet_projects/distributed_pub_sub/src/EventEngineService/EventEngine.Api/bin/Debug/net8.0/Microsoft.Extensions.Options.ConfigurationExtensions.dll
 /home/morris/Workspace/dotnet_projects/distributed_pub_sub/src/EventEngineService/EventEngine.Api/bin/Debug/net8.0/Microsoft.Extensions.Primitives.dll
 /home/morris/Workspace/dotnet_projects/distributed_pub_sub/src/EventEngineService/EventEngine.Api/bin/Debug/net8.0/System.Diagnostics.DiagnosticSource.dll
+/home/morris/Workspace/dotnet_projects/distributed_pub_sub/src/EventEngineService/EventEngine.Api/bin/Debug/net8.0/EventEngine.ClientHttp.dll
+/home/morris/Workspace/dotnet_projects/distributed_pub_sub/src/EventEngineService/EventEngine.Api/bin/Debug/net8.0/EventEngine.ClientHttp.pdb

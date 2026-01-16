@@ -1,5 +1,6 @@
 using EventEngine.Repository.Models;
 using EventEngine.Repository.Abstractions;
+using EventEngine.ClientHttp.Abstractions;
 using System.Text;
 using System.Text.Json;
 using Microsoft.Extensions.Hosting;
@@ -30,12 +31,13 @@ public class DispatchService : BackgroundService
             {
                 using var scope = _serviceProvider.CreateScope();
                 var repository = scope.ServiceProvider.GetRequiredService<IRepository>();
+                var clientHttp = scope.ServiceProvider.GetRequiredService<IClientHttp>();
 
                 // i create a PENDING DispatchLog record for each Subscription to the Events
                 await CreateDispatchLogsAsync(repository, cancellationToken);
 
                 // i dispatch all the PENDING DispatchLogs, both the newly created and the ququed ones
-                // await ProcessPendingLogsAsync(repository, cancellationToken);
+                await ProcessPendingLogsAsync(repository, clientHttp, cancellationToken);
             }
             catch (Exception ex)
             {
@@ -58,7 +60,7 @@ public class DispatchService : BackgroundService
             foreach (var sub in subscriptions)
             {
                 // for each subscription interested in the event I add a new DisptachLog with the status PENDING
-                await repository.CreateDispatchLogAsync(ev.Id, cancellationToken);
+                await repository.CreateDispatchLogAsync(ev.Id, sub.Id, cancellationToken);
             }
 
             // the event is processed in the sense that i've created the necessary Dispatched logs
@@ -69,64 +71,52 @@ public class DispatchService : BackgroundService
             await repository.SaveChangesAsync(cancellationToken);
     }
 
-    // private async Task ProcessPendingLogsAsync(IRepository repository, CancellationToken ct)
-    // {
-    //     // Carichiamo i log PENDING includendo i dati dell'evento e della sottoscrizione
-    //     // Nota: Assicurati di avere le Navigation Properties nel modello DispatchLog
-    //     var pendingLogs = await repository.DispatchLogs
-    //         .Include(l => l.Event)
-    //         .Where(l => l.Status == "PENDING" && l.Attempts < 3)
-    //         .ToListAsync(ct);
+    private async Task ProcessPendingLogsAsync(IRepository repository, IClientHttp clientHttp, CancellationToken cancellationToken)
+    {
+        // i get all the DispatchLogs with PENDING status and Attempts < 3
+        var pendingLogs = await repository.GetPendingDispatchLogsAsync(cancellationToken);
 
-    //     if (!pendingLogs.Any()) return;
+        if (!pendingLogs.Any()) return;
 
-    //     var client = _httpClientFactory.CreateClient("WebhookClient");
+        foreach (var log in pendingLogs)
+        {
+            // i get the CallbackUrl from the SubscriptionId in the DispatchLog
+            var callbackUrl = await repository.GetCallbackUrlOfSubscription(log.SubscriptionId, cancellationToken);
 
-    //     foreach (var log in pendingLogs)
-    //     {
-    //         // Recuperiamo l'URL della sottoscrizione (dovresti avere una FK verso Subscription)
-    //         // Per ora ipotizziamo di recuperarla via log.Event o log.Subscription
-    //         var callbackUrl = await repository.Subscriptions
-    //             .Where(s => s.Id == log.SubscriptionId) // Assumendo che tu aggiunga SubscriptionId
-    //             .Select(s => s.CallbackUrl)
-    //             .FirstOrDefaultAsync(ct);
+            if (string.IsNullOrEmpty(callbackUrl))
+            {
+                log.Status = "FAILED";
+                log.ErrorMessage = "CallbackUrl not found";
+                continue;
+            }
 
-    //         if (string.IsNullOrEmpty(callbackUrl))
-    //         {
-    //             log.Status = "FAILED";
-    //             log.ErrorMessage = "Callback URL non trovato o sottoscrizione rimossa.";
-    //             continue;
-    //         }
+            try
+            {
+                log.Attempts++;
+                log.DispatchedAt = DateTime.UtcNow;
 
-    //         try
-    //         {
-    //             log.Attempts++;
-    //             log.DispatchedAt = DateTime.UtcNow;
+                // http call to the url with the payload as content
+                var response = await clientHttp.SendNotificationAsync(callbackUrl, log.Event!.Payload, cancellationToken);
 
-    //             var content = new StringContent(log.Event!.Data, Encoding.UTF8, "application/json");
+                if (response.IsSuccess)
+                {
+                    log.Status = "SUCCESS";
+                    log.ErrorMessage = null;
+                }
+                else
+                {
+                    log.Status = "FAILED";
+                    log.ErrorMessage = $"HTTP {(int)response.StatusCode}: {response.Error}";
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Status = "FAILED";
+                log.ErrorMessage = ex.Message;
+                _logger.LogWarning($"Failed sending for DispatchLog {log.Id}");
+            }
+        }
 
-    //             // Chiamata HTTP con timeout breve
-    //             var response = await client.PostAsync(callbackUrl, content, ct);
-
-    //             if (response.IsSuccessStatusCode)
-    //             {
-    //                 log.Status = "SUCCESS";
-    //                 log.ErrorMessage = null;
-    //             }
-    //             else
-    //             {
-    //                 log.Status = "FAILED";
-    //                 log.ErrorMessage = $"HTTP {(int)response.StatusCode}: {response.ReasonPhrase}";
-    //             }
-    //         }
-    //         catch (Exception ex)
-    //         {
-    //             log.Status = "FAILED";
-    //             log.ErrorMessage = ex.Message;
-    //             _logger.LogWarning("Invio fallito per log {LogId}: {Error}", log.Id, ex.Message);
-    //         }
-    //     }
-
-    //     await repository.SaveChangesAsync(ct);
-    // }
+        await repository.SaveChangesAsync(cancellationToken);
+    }
 }
