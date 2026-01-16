@@ -2,6 +2,7 @@ using Confluent.Kafka;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Configuration;
 using EventEngine.Shared;
 using EventEngine.Repository.Abstractions;
 using System.Text.Json;
@@ -13,16 +14,18 @@ public class SubscriptionConsumerWorker : BackgroundService
     private readonly ILogger<SubscriptionConsumerWorker> _logger;
     private readonly IServiceProvider _serviceProvider;
     private readonly IConsumer<string, string> _consumer;
-
+    private readonly IConfiguration _configuration;
     private readonly ConsumerConfig _config;
 
-    public SubscriptionConsumerWorker(ILogger<SubscriptionConsumerWorker> logger, IServiceProvider serviceProvider)
+    public SubscriptionConsumerWorker(ILogger<SubscriptionConsumerWorker> logger, IServiceProvider serviceProvider, IConfiguration configuration)
     {
         _logger = logger;
         _serviceProvider = serviceProvider;
+        _configuration = configuration;
+        var bootstrapServers = _configuration["Kafka:BootstrapServers"] ?? "localhost:9092";
         _config = new ConsumerConfig
         {
-            BootstrapServers = "localhost:9092",
+            BootstrapServers = bootstrapServers,
             GroupId = "event-engine-group",
             AutoOffsetReset = AutoOffsetReset.Earliest,
             EnableAutoCommit = true

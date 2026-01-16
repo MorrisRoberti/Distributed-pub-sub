@@ -1,5 +1,5 @@
 services:
-  sqlserver:
+  sql-server:
     image: mcr.microsoft.com/mssql/server:2022-latest
     container_name: sqlserver
     networks:
@@ -11,16 +11,15 @@ services:
       - "1433:1433"
 
   zookeeper:
-    image: confluentinc/cp-zookeeper:7.5.0 # Versione specifica
+    image: confluentinc/cp-zookeeper:7.5.0
     container_name: zookeeper
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
-      ZOOKEEPER_TICK_TIME: 2000
     networks:
       - registry-net
 
   kafka:
-    image: confluentinc/cp-kafka:7.5.0 # Versione specifica
+    image: confluentinc/cp-kafka:7.5.0
     container_name: kafka
     depends_on:
       - zookeeper
@@ -29,12 +28,69 @@ services:
     environment:
       KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:29092,PLAINTEXT_HOST://localhost:9092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
-      # Questa variabile dice a Kafka di NON usare KRaft e di usare Zookeeper
-      KAFKA_ENABLE_KRAFT: "false"
+    networks:
+      - registry-net
+    healthcheck:
+      test: ["CMD-SHELL", "nc -z localhost 29092 || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  identity-api:
+    build:
+      context: .
+      dockerfile: src/IdentityService/Identity.Api/Dockerfile
+    ports:
+      - "5001:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__IdentityDbContext=Server=sql-server;Database=IdentityDB;User Id=sa;Password=YourSecurePassword123!;Encrypt=False;TrustServerCertificate=True;
+    depends_on:
+      sql-server:
+        condition: service_started
+    networks:
+      - registry-net
+
+  registry-api:
+    build:
+      context: .
+      dockerfile: src/RegistryService/Registry.Api/Dockerfile
+    ports:
+      - "5000:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - IdentityService__Url=http://identity-api:8080
+      - Kafka__BootstrapServers=kafka:29092
+      - ConnectionStrings__SubscriptionDbContext=Server=sql-server;Database=RegistryDB;User Id=sa;Password=YourSecurePassword123!;Encrypt=False;TrustServerCertificate=True;
+    depends_on:
+      identity-api:
+        condition: service_started
+      kafka:
+        condition: service_healthy
+      sql-server:
+        condition: service_started
+    networks:
+      - registry-net
+
+  event-engine-api:
+    build:
+      context: .
+      dockerfile: src/EventEngineService/EventEngine.Api/Dockerfile
+    ports:
+      - "5002:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - Kafka__BootstrapServers=kafka:29092
+      - ConnectionStrings__EventEngineDbContext=Server=sql-server;Database=EventEngineDB;User Id=sa;Password=YourSecurePassword123!;Encrypt=False;TrustServerCertificate=True;
+    depends_on:
+      kafka:
+        condition: service_healthy
+      sql-server:
+        condition: service_started
     networks:
       - registry-net
 

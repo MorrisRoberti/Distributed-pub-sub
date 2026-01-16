@@ -14,12 +14,14 @@
         "outputPath": "/home/morris/Workspace/dotnet_projects/distributed_pub_sub/src/EventEngineService/EventEngine.Api/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
+          "/home/morris/Workspace/dotnet_projects/distributed_pub_sub/nuget.config",
           "/home/morris/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
+          "/home/morris/Workspace/dotnet_projects/distributed_pub_sub/LocalNuGet": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -84,12 +86,14 @@
         "outputPath": "/home/morris/Workspace/dotnet_projects/distributed_pub_sub/src/EventEngineService/EventEngine.Business/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
+          "/home/morris/Workspace/dotnet_projects/distributed_pub_sub/nuget.config",
           "/home/morris/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
+          "/home/morris/Workspace/dotnet_projects/distributed_pub_sub/LocalNuGet": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -169,12 +173,14 @@
         "outputPath": "/home/morris/Workspace/dotnet_projects/distributed_pub_sub/src/EventEngineService/EventEngine.ClientHttp/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
+          "/home/morris/Workspace/dotnet_projects/distributed_pub_sub/nuget.config",
           "/home/morris/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
+          "/home/morris/Workspace/dotnet_projects/distributed_pub_sub/LocalNuGet": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -228,12 +234,14 @@
         "outputPath": "/home/morris/Workspace/dotnet_projects/distributed_pub_sub/src/EventEngineService/EventEngine.Repository/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
+          "/home/morris/Workspace/dotnet_projects/distributed_pub_sub/nuget.config",
           "/home/morris/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
+          "/home/morris/Workspace/dotnet_projects/distributed_pub_sub/LocalNuGet": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -299,12 +307,14 @@
         "outputPath": "/home/morris/Workspace/dotnet_projects/distributed_pub_sub/src/EventEngineService/EventEngine.Shared/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
+          "/home/morris/Workspace/dotnet_projects/distributed_pub_sub/nuget.config",
           "/home/morris/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
+          "/home/morris/Workspace/dotnet_projects/distributed_pub_sub/LocalNuGet": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {

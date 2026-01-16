@@ -15,7 +15,8 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddHttpClient<IdentityClientHttp>(client =>
 {
-    client.BaseAddress = new Uri("http://identity-service:8080");
+    var identityUrl = builder.Configuration["IdentityService:Url"] ?? "http://localhost:5001";
+    client.BaseAddress = new Uri(identityUrl);
 });
 
 builder.Services.AddScoped<IBusiness, Business>();
@@ -28,7 +29,7 @@ var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
     var context = scope.ServiceProvider.GetRequiredService<SubscriptionDbContext>();
-    context.Database.EnsureDeleted();
+    // context.Database.EnsureDeleted();
     context.Database.EnsureCreated();
 }
 
