@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>Identity.ClientHttp</id>
+    <version>1.0.1</version>
+    <authors>Identity.ClientHttp</authors>
+    <description>Package Description</description>
+    <repository type="git" commit="cb6ecd0f898aba9778ae5e302457deeddecdd87a" />
+    <dependencies>
+      <group targetFramework="net8.0">
+        <dependency id="Identity.Shared" version="1.0.0" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.Extensions.Http" version="8.0.0" exclude="Build,Analyzers" />
+      </group>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="/home/morris/Workspace/dotnet_projects/distributed_pub_sub/src/IdentityService/Identity.ClientHttp/bin/Release/net8.0/Identity.ClientHttp.dll" target="lib/net8.0/Identity.ClientHttp.dll" />
+  </files>
+</package>

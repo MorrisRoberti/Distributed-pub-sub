@@ -5,7 +5,7 @@ namespace Identity.Shared;
 public class UserCredentialsDTO
 {
     [Required]
-    public Guid UserId { get; set; }
+    public string UserId { get; set; } = string.Empty;
 
     public string? ApiToken { get; set; }
 

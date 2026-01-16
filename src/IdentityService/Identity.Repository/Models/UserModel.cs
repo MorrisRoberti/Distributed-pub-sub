@@ -7,7 +7,7 @@ namespace Identity.Repository.Models;
 public class User
 {
     [Key]
-    public Guid UserId { get; set; }
+    public string UserId { get; set; }
 
     [Key]
     public string ApiToken { get; set; }

@@ -4,5 +4,5 @@ namespace Identity.Business.Abstractions;
 public interface IBusiness
 {
     Task<(UserCredentialsDTO? credentials, string message)> AuthorizeUserAsync(UserCredentialsDTO userCredentials, CancellationToken cancellationToken = default);
-    string GenerateSecureHash(Guid userId);
+    string GenerateSecureHash(string userId);
 }

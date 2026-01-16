@@ -18,7 +18,7 @@ public class IdentityController : ControllerBase
         _logger = logger;
     }
 
-    [HttpPost("auth", Name = "AuthorizeAsync")]
+    [HttpPost(Name = "AuthorizeAsync")]
     public async Task<ActionResult> AuthorizeAsync(UserCredentialsDTO userCredentials)
     {
         _logger.LogInformation($"HTTP POST: Received request to authorize user with id {userCredentials.UserId}");

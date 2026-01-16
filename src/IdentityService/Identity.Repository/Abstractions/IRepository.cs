@@ -8,6 +8,6 @@ public interface IRepository
 {
     Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
     Task<IDbContextTransaction> BeginTransactionAsync();
-    Task<User> GetUserFromIdAsync(Guid userId, CancellationToken cancellationToken = default);
-    Task<User> CreateUserAsync(Guid userId, string apiToken, CancellationToken cancellationToken = default);
+    Task<User> GetUserFromIdAsync(string userId, CancellationToken cancellationToken = default);
+    Task<User> CreateUserAsync(string userId, string apiToken, CancellationToken cancellationToken = default);
 }

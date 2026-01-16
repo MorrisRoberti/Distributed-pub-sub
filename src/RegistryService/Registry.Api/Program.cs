@@ -4,6 +4,7 @@ using Registry.Business.Abstractions;
 using Registry.Business.Kafka;
 using Registry.Repository.Abstractions;
 using Microsoft.EntityFrameworkCore;
+using Identity.ClientHttp;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -11,6 +12,11 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddDbContext<SubscriptionDbContext>(options => options.UseSqlServer("name=ConnectionStrings:SubscriptionDbContext"));
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddHttpClient<IdentityClientHttp>(client =>
+{
+    client.BaseAddress = new Uri("http://identity-service:8080");
+});
 
 builder.Services.AddScoped<IBusiness, Business>();
 builder.Services.AddScoped<IRepository, Repository>();

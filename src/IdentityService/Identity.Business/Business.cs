@@ -53,7 +53,7 @@ public class Business(IRepository repository, ILogger<Business> logger) : IBusin
 
     }
 
-    public string GenerateSecureHash(Guid userId)
+    public string GenerateSecureHash(string userId)
     {
         // i need to find an hash function to -> hash(userId, salt);
         return "token";

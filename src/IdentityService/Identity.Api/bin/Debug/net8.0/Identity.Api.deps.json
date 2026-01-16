@@ -561,7 +561,7 @@
       "Identity.Business/1.0.0": {
         "dependencies": {
           "Identity.Repository": "1.0.0",
-          "Identity.Shared": "1.0.0"
+          "Identity.Shared": "1.0.1"
         },
         "runtime": {
           "Identity.Business.dll": {}
@@ -569,7 +569,7 @@
       },
       "Identity.Repository/1.0.0": {
         "dependencies": {
-          "Identity.Shared": "1.0.0",
+          "Identity.Shared": "1.0.1",
           "Microsoft.EntityFrameworkCore": "8.0.0",
           "Microsoft.EntityFrameworkCore.SqlServer": "8.0.0",
           "System.ComponentModel.Annotations": "5.0.0"
@@ -578,7 +578,7 @@
           "Identity.Repository.dll": {}
         }
       },
-      "Identity.Shared/1.0.0": {
+      "Identity.Shared/1.0.1": {
         "runtime": {
           "Identity.Shared.dll": {}
         }
@@ -1035,7 +1035,7 @@
       "serviceable": false,
       "sha512": ""
     },
-    "Identity.Shared/1.0.0": {
+    "Identity.Shared/1.0.1": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

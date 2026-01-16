@@ -18,11 +18,11 @@ public class Repository(IdentityDbContext identityDbContext) : IRepository
         return await identityDbContext.Database.BeginTransactionAsync();
     }
 
-    public async Task<User> GetUserFromIdAsync(Guid userId, CancellationToken cancellationToken = default)
+    public async Task<User> GetUserFromIdAsync(string userId, CancellationToken cancellationToken = default)
     {
         return await identityDbContext.Users.Where(u => u.UserId == userId).FirstOrDefaultAsync(cancellationToken);
     }
-    public async Task<User> CreateUserAsync(Guid userId, string apiToken, CancellationToken cancellationToken = default)
+    public async Task<User> CreateUserAsync(string userId, string apiToken, CancellationToken cancellationToken = default)
     {
         var newUser = new User
         {

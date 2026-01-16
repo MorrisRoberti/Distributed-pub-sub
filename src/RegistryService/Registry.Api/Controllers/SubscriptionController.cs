@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Registry.Shared;
 using Registry.Business.Abstractions;
+using Identity.ClientHttp;
+using Identity.Shared;
 namespace Registry.Api.Controllers;
 
 
@@ -12,21 +14,37 @@ public class SubscriptionController : ControllerBase
 
     private readonly IBusiness _business;
     private readonly ILogger<SubscriptionController> _logger;
+    private readonly IdentityClientHttp _identityClient;
 
-    public SubscriptionController(IBusiness business, ILogger<SubscriptionController> logger)
+    public SubscriptionController(IBusiness business, ILogger<SubscriptionController> logger, IdentityClientHttp identityClient)
     {
         _business = business;
         _logger = logger;
+        _identityClient = identityClient;
     }
 
     [HttpPost("subscribe", Name = "CreateSubscription")]
     public async Task<ActionResult<Guid>> CreateSubscription(SubscriptionDTO? subscription)
     {
-
-        if (subscription is null)
+        if (subscription is null || subscription.UserId is null)
         {
-            _logger.LogWarning($"HTTP POST: subscription was null");
+            _logger.LogWarning($"HTTP POST: subscription was invalid");
             return BadRequest();
+        }
+
+        var authRequest = new UserCredentialsDTO
+        {
+            UserId = subscription.UserId,
+            ApiToken = subscription.ApiToken
+        };
+
+        var (authResult, error) = await _identityClient.AuthorizeAsync(authRequest);
+
+        if (authResult == null)
+        {
+            _logger.LogWarning($"HTTP POST: Auth failed for User {subscription.UserId}. Error: {error}");
+
+            return StatusCode(StatusCodes.Status401Unauthorized, new { Message = error });
         }
 
         _logger.LogInformation($"HTTP POST: Received request to create a subscription for User {subscription.UserId}");
