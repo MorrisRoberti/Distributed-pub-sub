@@ -14,12 +14,14 @@
         "outputPath": "/home/morris/Workspace/dotnet_projects/distributed_pub_sub/src/RegistryService/Registry.Api/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
+          "/home/morris/Workspace/dotnet_projects/distributed_pub_sub/nuget.config",
           "/home/morris/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
+          "/home/morris/Workspace/dotnet_projects/distributed_pub_sub/LocalNuGet": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -45,6 +47,10 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
+            "Identity.ClientHttp": {
+              "target": "Package",
+              "version": "[1.0.2, )"
+            },
             "Microsoft.AspNetCore.OpenApi": {
               "target": "Package",
               "version": "[8.0.22, )"
@@ -91,12 +97,14 @@
         "outputPath": "/home/morris/Workspace/dotnet_projects/distributed_pub_sub/src/RegistryService/Registry.Business/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
+          "/home/morris/Workspace/dotnet_projects/distributed_pub_sub/nuget.config",
           "/home/morris/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
+          "/home/morris/Workspace/dotnet_projects/distributed_pub_sub/LocalNuGet": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -169,12 +177,14 @@
         "outputPath": "/home/morris/Workspace/dotnet_projects/distributed_pub_sub/src/RegistryService/Registry.Repository/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
+          "/home/morris/Workspace/dotnet_projects/distributed_pub_sub/nuget.config",
           "/home/morris/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
+          "/home/morris/Workspace/dotnet_projects/distributed_pub_sub/LocalNuGet": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -232,12 +242,14 @@
         "outputPath": "/home/morris/Workspace/dotnet_projects/distributed_pub_sub/src/RegistryService/Registry.Shared/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
+          "/home/morris/Workspace/dotnet_projects/distributed_pub_sub/nuget.config",
           "/home/morris/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
+          "/home/morris/Workspace/dotnet_projects/distributed_pub_sub/LocalNuGet": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {

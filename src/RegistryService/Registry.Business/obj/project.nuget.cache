@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "P2oTN+vDLRtWDYTzLiYs3Rv/1IAvUv2eCOzLjYqPbKhwnkeB/lAokq2sIVLa/hT0THINfsAGn8K2w08YjnwMCQ==",
+  "dgSpecHash": "gobE+kQRwXbEyXKLj/GNR9bXF7FaF/I/0+jDFiDREEKTp7Ng0thbBT32932aman29FFhZvExBNZ2O7zIteTlzg==",
   "success": true,
   "projectFilePath": "/home/morris/Workspace/dotnet_projects/distributed_pub_sub/src/RegistryService/Registry.Business/Registry.Business.csproj",
   "expectedPackageFiles": [

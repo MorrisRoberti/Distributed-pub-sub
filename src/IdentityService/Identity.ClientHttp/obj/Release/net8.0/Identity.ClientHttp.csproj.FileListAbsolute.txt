@@ -1,0 +1,16 @@
+/home/morris/Workspace/dotnet_projects/distributed_pub_sub/src/IdentityService/Identity.ClientHttp/bin/Release/net8.0/Identity.ClientHttp.deps.json
+/home/morris/Workspace/dotnet_projects/distributed_pub_sub/src/IdentityService/Identity.ClientHttp/bin/Release/net8.0/Identity.ClientHttp.dll
+/home/morris/Workspace/dotnet_projects/distributed_pub_sub/src/IdentityService/Identity.ClientHttp/bin/Release/net8.0/Identity.ClientHttp.pdb
+/home/morris/Workspace/dotnet_projects/distributed_pub_sub/src/IdentityService/Identity.ClientHttp/bin/Release/net8.0/Identity.Shared.dll
+/home/morris/Workspace/dotnet_projects/distributed_pub_sub/src/IdentityService/Identity.ClientHttp/bin/Release/net8.0/Identity.Shared.pdb
+/home/morris/Workspace/dotnet_projects/distributed_pub_sub/src/IdentityService/Identity.ClientHttp/obj/Release/net8.0/Identity.ClientHttp.csproj.AssemblyReference.cache
+/home/morris/Workspace/dotnet_projects/distributed_pub_sub/src/IdentityService/Identity.ClientHttp/obj/Release/net8.0/Identity.ClientHttp.GeneratedMSBuildEditorConfig.editorconfig
+/home/morris/Workspace/dotnet_projects/distributed_pub_sub/src/IdentityService/Identity.ClientHttp/obj/Release/net8.0/Identity.ClientHttp.AssemblyInfoInputs.cache
+/home/morris/Workspace/dotnet_projects/distributed_pub_sub/src/IdentityService/Identity.ClientHttp/obj/Release/net8.0/Identity.ClientHttp.AssemblyInfo.cs
+/home/morris/Workspace/dotnet_projects/distributed_pub_sub/src/IdentityService/Identity.ClientHttp/obj/Release/net8.0/Identity.ClientHttp.csproj.CoreCompileInputs.cache
+/home/morris/Workspace/dotnet_projects/distributed_pub_sub/src/IdentityService/Identity.ClientHttp/obj/Release/net8.0/Identity.ClientHttp.sourcelink.json
+/home/morris/Workspace/dotnet_projects/distributed_pub_sub/src/IdentityService/Identity.ClientHttp/obj/Release/net8.0/Identity.ClientHttp.csproj.CopyComplete
+/home/morris/Workspace/dotnet_projects/distributed_pub_sub/src/IdentityService/Identity.ClientHttp/obj/Release/net8.0/Identity.ClientHttp.dll
+/home/morris/Workspace/dotnet_projects/distributed_pub_sub/src/IdentityService/Identity.ClientHttp/obj/Release/net8.0/refint/Identity.ClientHttp.dll
+/home/morris/Workspace/dotnet_projects/distributed_pub_sub/src/IdentityService/Identity.ClientHttp/obj/Release/net8.0/Identity.ClientHttp.pdb
+/home/morris/Workspace/dotnet_projects/distributed_pub_sub/src/IdentityService/Identity.ClientHttp/obj/Release/net8.0/ref/Identity.ClientHttp.dll

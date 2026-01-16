@@ -4,6 +4,7 @@ using Registry.Business.Abstractions;
 using Registry.Business.Kafka;
 using Registry.Repository.Abstractions;
 using Microsoft.EntityFrameworkCore;
+using Identity.ClientHttp;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -11,6 +12,12 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddDbContext<SubscriptionDbContext>(options => options.UseSqlServer("name=ConnectionStrings:SubscriptionDbContext"));
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddHttpClient<IdentityClientHttp>(client =>
+{
+    var identityUrl = builder.Configuration["IdentityService:Url"] ?? "http://localhost:5001";
+    client.BaseAddress = new Uri(identityUrl);
+});
 
 builder.Services.AddScoped<IBusiness, Business>();
 builder.Services.AddScoped<IRepository, Repository>();
@@ -22,7 +29,7 @@ var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
     var context = scope.ServiceProvider.GetRequiredService<SubscriptionDbContext>();
-    context.Database.EnsureDeleted();
+    // context.Database.EnsureDeleted();
     context.Database.EnsureCreated();
 }
 

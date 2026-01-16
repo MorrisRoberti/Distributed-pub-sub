@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "oQLB/2coJ5LWtWZQOnbZcbp3cRgW6wIiBnBnleMNOtADY6SX58SbdQ/PiuQ0qJ/YiDTZgRQlC4Pp79k7c70SBA==",
+  "dgSpecHash": "eVUgmMk1v57yruo2HqqJHdH4IXKzjB+8qfBRlXIM2FydvJWts8INFEIFaSSB37lHDHKHb/9+DVq7RLA6pK6iDQ==",
   "success": true,
   "projectFilePath": "/home/morris/Workspace/dotnet_projects/distributed_pub_sub/src/EventEngineService/EventEngine.Business/EventEngine.Business.csproj",
   "expectedPackageFiles": [

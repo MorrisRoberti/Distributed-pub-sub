@@ -21,4 +21,6 @@ public class SubscriptionDTO
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
     public DateTime? DeletedAt { get; set; } = DateTime.UtcNow;
+
+    public string ApiToken { get; set; }
 }

@@ -2,6 +2,7 @@ using Confluent.Kafka;
 using Registry.Shared;
 using System.Text.Json;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Configuration;
 namespace Registry.Business.Kafka;
 
 public class ProducerServiceWithSubscription
@@ -9,14 +10,18 @@ public class ProducerServiceWithSubscription
     private readonly ProducerConfig _config;
     private readonly IProducer<string, string> _producer;
     private readonly ILogger<ProducerServiceWithSubscription> _logger;
+    private readonly IConfiguration _configuration;
 
-    public ProducerServiceWithSubscription(ILogger<ProducerServiceWithSubscription> logger)
+    public ProducerServiceWithSubscription(ILogger<ProducerServiceWithSubscription> logger, IConfiguration configuration)
     {
         _logger = logger;
+        _configuration = configuration;
+        var bootstrapServers = _configuration["Kafka:BootstrapServers"] ?? "localhost:9092";
         _config = new ProducerConfig
         {
-            BootstrapServers = "localhost:9092",
-            Acks = Acks.All
+            BootstrapServers = bootstrapServers,
+            Acks = Acks.All,
+            MessageTimeoutMs = 5000
         };
         _producer = new ProducerBuilder<string, string>(_config).Build();
     }

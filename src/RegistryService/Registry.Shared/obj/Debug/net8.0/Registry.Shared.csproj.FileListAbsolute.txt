@@ -5,8 +5,8 @@
 /home/morris/Workspace/dotnet_projects/distributed_pub_sub/src/RegistryService/Registry.Shared/obj/Debug/net8.0/Registry.Shared.AssemblyInfoInputs.cache
 /home/morris/Workspace/dotnet_projects/distributed_pub_sub/src/RegistryService/Registry.Shared/obj/Debug/net8.0/Registry.Shared.AssemblyInfo.cs
 /home/morris/Workspace/dotnet_projects/distributed_pub_sub/src/RegistryService/Registry.Shared/obj/Debug/net8.0/Registry.Shared.csproj.CoreCompileInputs.cache
+/home/morris/Workspace/dotnet_projects/distributed_pub_sub/src/RegistryService/Registry.Shared/obj/Debug/net8.0/Registry.Shared.sourcelink.json
 /home/morris/Workspace/dotnet_projects/distributed_pub_sub/src/RegistryService/Registry.Shared/obj/Debug/net8.0/Registry.Shared.dll
 /home/morris/Workspace/dotnet_projects/distributed_pub_sub/src/RegistryService/Registry.Shared/obj/Debug/net8.0/refint/Registry.Shared.dll
 /home/morris/Workspace/dotnet_projects/distributed_pub_sub/src/RegistryService/Registry.Shared/obj/Debug/net8.0/Registry.Shared.pdb
 /home/morris/Workspace/dotnet_projects/distributed_pub_sub/src/RegistryService/Registry.Shared/obj/Debug/net8.0/ref/Registry.Shared.dll
-/home/morris/Workspace/dotnet_projects/distributed_pub_sub/src/RegistryService/Registry.Shared/obj/Debug/net8.0/Registry.Shared.sourcelink.json

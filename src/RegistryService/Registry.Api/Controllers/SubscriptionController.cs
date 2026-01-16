@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Registry.Shared;
 using Registry.Business.Abstractions;
+using Identity.ClientHttp;
+using Identity.Shared;
 namespace Registry.Api.Controllers;
 
 
@@ -12,30 +14,53 @@ public class SubscriptionController : ControllerBase
 
     private readonly IBusiness _business;
     private readonly ILogger<SubscriptionController> _logger;
+    private readonly IdentityClientHttp _identityClient;
 
-    public SubscriptionController(IBusiness business, ILogger<SubscriptionController> logger)
+    public SubscriptionController(IBusiness business, ILogger<SubscriptionController> logger, IdentityClientHttp identityClient)
     {
         _business = business;
         _logger = logger;
+        _identityClient = identityClient;
     }
 
     [HttpPost("subscribe", Name = "CreateSubscription")]
-    public async Task<ActionResult<Guid>> CreateSubscription(SubscriptionDTO? subscription)
+    public async Task<ActionResult> CreateSubscription(SubscriptionDTO? subscription)
     {
-
-        if (subscription is null)
+        if (subscription is null || subscription.UserId is null)
         {
-            _logger.LogWarning($"HTTP POST: subscription was null");
+            _logger.LogWarning($"HTTP POST: subscription was invalid");
             return BadRequest();
+        }
+
+        var authRequest = new UserCredentialsDTO
+        {
+            UserId = subscription.UserId,
+            ApiToken = subscription.ApiToken
+        };
+
+        var (authResult, error) = await _identityClient.AuthorizeAsync(authRequest);
+
+        if (authResult == null)
+        {
+            _logger.LogWarning($"HTTP POST: Auth failed for User {subscription.UserId}. Error: {error}");
+
+            return StatusCode(StatusCodes.Status401Unauthorized, new { Message = error });
         }
 
         _logger.LogInformation($"HTTP POST: Received request to create a subscription for User {subscription.UserId}");
 
         Guid subId = await _business.CreateSubscriptionAsync(subscription);
 
+
+        var response = new
+        {
+            SubscriptionId = subId,
+            ApiToken = authResult.ApiToken
+        };
+
         _logger.LogInformation($"HTTP POST: Successfully created subscription {subId}");
 
-        return CreatedAtAction(nameof(GetSubscription), new { subscriptionId = subId }, subId);
+        return CreatedAtAction(nameof(GetSubscription), new { subscriptionId = subId }, response);
     }
 
     [HttpGet("{subscriptionId:guid}", Name = "GetSubscription")]
@@ -80,6 +105,7 @@ public class SubscriptionController : ControllerBase
     [HttpDelete("{subscriptionId:guid}", Name = "DeleteSubscription")]
     public async Task<ActionResult> DeleteSubscription(Guid subscriptionId)
     {
+
         _logger.LogInformation($"HTTP DELETE: Received request to delete subscription with Id {subscriptionId}");
 
         bool result = await _business.DeleteSubscriptionAsync(subscriptionId);
