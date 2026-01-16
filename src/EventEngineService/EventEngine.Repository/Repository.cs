@@ -1,3 +1,4 @@
+using System.Collections;
 using EventEngine.Repository.Abstractions;
 using EventEngine.Repository.Models;
 using EventEngine.Shared;
@@ -67,5 +68,36 @@ public class Repository(EventEngineDbContext eventEngineDbContext) : IRepository
         }
 
         await eventEngineDbContext.SaveChangesAsync();
+    }
+
+    public async Task<IEnumerable<Event>> GetUnprocessedEventsAsync(CancellationToken cancellationToken)
+    {
+        return await eventEngineDbContext.Events
+            .Where(e => !e.Processed)
+            .ToListAsync(cancellationToken);
+    }
+
+    public async Task<IEnumerable<Subscription>> GetSubscriptionsFromEventTypeAsync(string eventType, CancellationToken cancellationToken)
+    {
+        return await eventEngineDbContext.Subscriptions
+                .Where(s => s.EventType == eventType && s.IsActive && s.DeletedAt == null)
+                .ToListAsync(cancellationToken);
+    }
+
+    public async Task<DispatchLog> CreateDispatchLogAsync(Guid eventId, CancellationToken cancellationToken = default)
+    {
+        DispatchLog newLog = new DispatchLog
+        {
+            Id = Guid.NewGuid(),
+            EventId = eventId,
+            // Ti consiglio di aggiungere SubscriptionId alla tabella per tracciare a chi mandi cosa
+            // SubscriptionId = sub.Id, 
+            Status = "PENDING", // actually PENDING is already the default value, but i leave it for clarity's sake
+            Attempts = 0, // same as above
+            DispatchedAt = DateTime.UtcNow
+        };
+
+        await eventEngineDbContext.DispatchLogs.AddAsync(newLog, cancellationToken);
+        return newLog;
     }
 }

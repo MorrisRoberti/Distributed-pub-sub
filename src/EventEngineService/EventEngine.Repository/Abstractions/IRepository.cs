@@ -9,4 +9,7 @@ public interface IRepository
     Task<Event> CreateEventAsync(string EventType, string Payload, CancellationToken cancellationToken = default);
     Task<Event?> GetEventAsync(Guid eventId, CancellationToken cancellationToken = default);
     Task UpsertSubscriptionAsync(SubscriptionDTO dto);
+    Task<IEnumerable<Event>> GetUnprocessedEventsAsync(CancellationToken cancellationToken);
+    Task<IEnumerable<Subscription>> GetSubscriptionsFromEventTypeAsync(string eventType, CancellationToken cancellationToken);
+    Task<DispatchLog> CreateDispatchLogAsync(Guid eventId, CancellationToken cancellationToken = default);
 }

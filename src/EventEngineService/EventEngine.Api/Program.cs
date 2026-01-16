@@ -15,6 +15,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IBusiness, Business>();
 builder.Services.AddScoped<IRepository, Repository>();
 builder.Services.AddHostedService<SubscriptionConsumerWorker>();
+builder.Services.AddHostedService<DispatchService>();
 
 var app = builder.Build();
 
