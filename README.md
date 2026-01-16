@@ -2,6 +2,9 @@
 
 > This is a distibuted version of the Publisher/Subscriber pattern.
 
+> The authentication had to be put in the header and for all endpoints of RegistryService
+> but due to the lack of time I didn't manage to, I will update the code in a future release
+
 # Run the project
 
 To run the project move in `distributed_pub_su` and launch `docker compose up`.
@@ -12,6 +15,11 @@ The microservices can be found at:
 - EventEngineService -> `http://localhost:5002/swagger/index.html`
 
 > Note that the IdentityService is not supposed to be esposed outside, the swagger is just for documentation.
+
+# Contribute
+
+When you make changes to the codebase please update the images of the service modified by rebuilding it and launching it with `docker compose up --build <ServiceName>`.
+Or if you want to rebuild the whole project do `docker compose up --build`.
 
 # Create a new service
 
@@ -61,3 +69,8 @@ dotnet add <ServiceName>.ClientHttp/<ServiceName>.ClientHttp.csproj package Micr
 ```
 
 In the future I will create a simple bash script to make all this commands automated
+
+# Roadmap
+
+In the future I plan to implement tests for the APIs to avoid regressions and stress tests to check how the application
+behaves with heavy loads of requests
