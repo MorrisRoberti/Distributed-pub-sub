@@ -15,9 +15,9 @@ public class Repository(IdentityDbContext identityDbContext) : IRepository
     }
 
     // Actually I don't need it but here it is, could be useful for future implementations
-    public async Task<IDbContextTransaction> BeginTransactionAsync()
+    public async Task<IDbContextTransaction> BeginTransactionAsync(CancellationToken cancellationToken = default)
     {
-        return await identityDbContext.Database.BeginTransactionAsync();
+        return await identityDbContext.Database.BeginTransactionAsync(cancellationToken);
     }
 
     public async Task<User?> GetUserFromIdAsync(string userId, CancellationToken cancellationToken = default)

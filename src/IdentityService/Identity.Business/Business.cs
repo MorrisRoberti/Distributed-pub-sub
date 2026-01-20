@@ -11,7 +11,7 @@ public class Business(IRepository repository, ILogger<Business> logger) : IBusin
 {
     // I don't need transactions here because with SaveChangesAsync, EF Core already treats this as an atomic transaction
     // NOTE: if something goes wrong with the connection to the db or stuff like that the service breaks because there is no exception handling yet
-    public async Task<(UserCredentialsDTO? credentials, string errorMessage)> AuthorizeUserAsync(UserCredentialsDTO userCredentials, CancellationToken cancellationToken = default)
+    public async Task<(UserCredentialsDTO? credentials, string? errorMessage)> AuthorizeUserAsync(UserCredentialsDTO userCredentials, CancellationToken cancellationToken = default)
     {
         User? user = await repository.GetUserFromIdAsync(userCredentials.UserId, cancellationToken);
 

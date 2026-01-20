@@ -7,7 +7,7 @@ namespace Identity.Repository.Abstractions;
 public interface IRepository
 {
     Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
-    Task<IDbContextTransaction> BeginTransactionAsync();
+    Task<IDbContextTransaction> BeginTransactionAsync(CancellationToken cancellationToken = default);
     Task<User?> GetUserFromIdAsync(string userId, CancellationToken cancellationToken = default);
     Task<User> CreateUserAsync(string userId, string apiToken, CancellationToken cancellationToken = default);
 }

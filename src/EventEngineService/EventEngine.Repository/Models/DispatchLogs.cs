@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EventEngine.Repository.Models;
 
+// A DispatchLog is related to an Event and a Subscription
 [Table("DispatchLogs")]
 public class DispatchLog
 {

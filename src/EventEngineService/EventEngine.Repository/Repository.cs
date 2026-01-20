@@ -23,22 +23,21 @@ public class Repository(EventEngineDbContext eventEngineDbContext) : IRepository
 
     public async Task<Event?> GetEventAsync(Guid eventId, CancellationToken cancellationToken = default)
     {
-        return await eventEngineDbContext.Events.Where(e => e.Id == eventId).FirstOrDefaultAsync(cancellationToken);
+        return await eventEngineDbContext.Events.Where(e => e.Id == eventId).SingleOrDefaultAsync(cancellationToken);
     }
 
-    public async Task UpsertSubscriptionAsync(SubscriptionDTO subscription)
+    public async Task UpsertSubscriptionAsync(SubscriptionDTO subscription, CancellationToken cancellationToken = default)
     {
 
-        // i search the current Subscription to see if it already exists
-        Subscription? existing = await eventEngineDbContext.Subscriptions
-            .FirstOrDefaultAsync(s => s.Id == subscription.Id);
+        // Search the current Subscription to see if it already exists
+        Subscription? existing = await eventEngineDbContext.Subscriptions.FindAsync(subscription.Id, cancellationToken);
 
         if (existing is null)
         {
             // The Subscription does not exist i create it and add it to db
             Subscription newSub = new Subscription
             {
-                // to be consistent I use the same id of the Subscription coming from the RegistryService
+                // To be consistent I use the same id of the Subscription coming from the RegistryService
                 Id = subscription.Id,
                 EventType = subscription.EventType,
                 CallbackUrl = subscription.CallbackUrl
@@ -70,14 +69,14 @@ public class Repository(EventEngineDbContext eventEngineDbContext) : IRepository
         await eventEngineDbContext.SaveChangesAsync();
     }
 
-    public async Task<IEnumerable<Event>> GetUnprocessedEventsAsync(CancellationToken cancellationToken)
+    public async Task<IEnumerable<Event>> GetUnprocessedEventsAsync(CancellationToken cancellationToken = default)
     {
         return await eventEngineDbContext.Events
             .Where(e => !e.Processed)
             .ToListAsync(cancellationToken);
     }
 
-    public async Task<IEnumerable<Subscription>> GetSubscriptionsFromEventTypeAsync(string eventType, CancellationToken cancellationToken)
+    public async Task<IEnumerable<Subscription>> GetSubscriptionsFromEventTypeAsync(string eventType, CancellationToken cancellationToken = default)
     {
         return await eventEngineDbContext.Subscriptions
                 .Where(s => s.EventType == eventType && s.IsActive && s.DeletedAt == null)
@@ -100,7 +99,7 @@ public class Repository(EventEngineDbContext eventEngineDbContext) : IRepository
         return newLog;
     }
 
-    public async Task<IEnumerable<DispatchLog>> GetPendingDispatchLogsAsync(CancellationToken cancellationToken)
+    public async Task<IEnumerable<DispatchLog>> GetPendingDispatchLogsAsync(CancellationToken cancellationToken = default)
     {
         return await eventEngineDbContext.DispatchLogs
              .Include(l => l.Event)
@@ -108,11 +107,11 @@ public class Repository(EventEngineDbContext eventEngineDbContext) : IRepository
              .ToListAsync(cancellationToken);
     }
 
-    public async Task<string> GetCallbackUrlOfSubscription(Guid subscriptionId, CancellationToken cancellationToken)
+    public async Task<string?> GetCallbackUrlOfSubscription(Guid subscriptionId, CancellationToken cancellationToken = default)
     {
         return await eventEngineDbContext.Subscriptions
                 .Where(s => s.Id == subscriptionId)
                 .Select(s => s.CallbackUrl)
-                .FirstOrDefaultAsync(cancellationToken);
+                .SingleOrDefaultAsync(cancellationToken);
     }
 }

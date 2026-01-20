@@ -1,27 +1,27 @@
 {
   "format": 1,
   "restore": {
-    "/mnt/c/workspace_personale/Distributed-pub-sub/src/IdentityService/Identity.Shared/Identity.Shared.csproj": {}
+    "/home/morris/Workspace/dotnet_projects/distributed_pub_sub/src/IdentityService/Identity.Shared/Identity.Shared.csproj": {}
   },
   "projects": {
-    "/mnt/c/workspace_personale/Distributed-pub-sub/src/IdentityService/Identity.Shared/Identity.Shared.csproj": {
+    "/home/morris/Workspace/dotnet_projects/distributed_pub_sub/src/IdentityService/Identity.Shared/Identity.Shared.csproj": {
       "version": "1.0.1",
       "restore": {
-        "projectUniqueName": "/mnt/c/workspace_personale/Distributed-pub-sub/src/IdentityService/Identity.Shared/Identity.Shared.csproj",
+        "projectUniqueName": "/home/morris/Workspace/dotnet_projects/distributed_pub_sub/src/IdentityService/Identity.Shared/Identity.Shared.csproj",
         "projectName": "Identity.Shared",
-        "projectPath": "/mnt/c/workspace_personale/Distributed-pub-sub/src/IdentityService/Identity.Shared/Identity.Shared.csproj",
+        "projectPath": "/home/morris/Workspace/dotnet_projects/distributed_pub_sub/src/IdentityService/Identity.Shared/Identity.Shared.csproj",
         "packagesPath": "/home/morris/.nuget/packages/",
-        "outputPath": "/mnt/c/workspace_personale/Distributed-pub-sub/src/IdentityService/Identity.Shared/obj/",
+        "outputPath": "/home/morris/Workspace/dotnet_projects/distributed_pub_sub/src/IdentityService/Identity.Shared/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/mnt/c/workspace_personale/Distributed-pub-sub/nuget.config",
+          "/home/morris/Workspace/dotnet_projects/distributed_pub_sub/nuget.config",
           "/home/morris/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
-          "/mnt/c/workspace_personale/Distributed-pub-sub/LocalNuGet": {},
+          "/home/morris/Workspace/dotnet_projects/distributed_pub_sub/LocalNuGet": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -55,7 +55,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/8.0.121/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/8.0.122/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

@@ -8,28 +8,19 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.DependencyInjection;
 namespace EventEngine.Business;
 
-public class DispatchService : BackgroundService
+public class DispatchService(IServiceProvider serviceProvider, ILogger<DispatchService> logger) : BackgroundService
 {
-    private readonly IServiceProvider _serviceProvider;
-    private readonly ILogger<DispatchService> _logger;
 
-    public DispatchService(
-        IServiceProvider serviceProvider,
-        ILogger<DispatchService> logger)
-    {
-        _serviceProvider = serviceProvider;
-        _logger = logger;
-    }
 
     protected override async Task ExecuteAsync(CancellationToken cancellationToken)
     {
-        _logger.LogInformation("DispatchService launched...");
+        logger.LogInformation("DispatchService launched...");
 
         while (!cancellationToken.IsCancellationRequested)
         {
             try
             {
-                using var scope = _serviceProvider.CreateScope();
+                using var scope = serviceProvider.CreateScope();
                 var repository = scope.ServiceProvider.GetRequiredService<IRepository>();
                 var clientHttp = scope.ServiceProvider.GetRequiredService<IClientHttp>();
 
@@ -41,7 +32,7 @@ public class DispatchService : BackgroundService
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Errore during the dispatch cycle");
+                logger.LogError(ex, "Errore during the dispatch cycle");
             }
 
             await Task.Delay(TimeSpan.FromSeconds(5), cancellationToken);
@@ -96,9 +87,9 @@ public class DispatchService : BackgroundService
                 log.DispatchedAt = DateTime.UtcNow;
 
                 // http call to the url with the payload as content
-                var response = await clientHttp.SendNotificationAsync(callbackUrl, log.Event!.Payload, cancellationToken);
+                var (IsSuccess, StatusCode, Error) = await clientHttp.SendNotificationAsync(callbackUrl, log.Event!.Payload, cancellationToken);
 
-                if (response.IsSuccess)
+                if (IsSuccess)
                 {
                     log.Status = "SUCCESS";
                     log.ErrorMessage = null;
@@ -106,14 +97,15 @@ public class DispatchService : BackgroundService
                 else
                 {
                     log.Status = "FAILED";
-                    log.ErrorMessage = $"HTTP {(int)response.StatusCode}: {response.Error}";
+                    log.ErrorMessage = $"HTTP {StatusCode}: {Error}";
                 }
+
             }
             catch (Exception ex)
             {
                 log.Status = "FAILED";
                 log.ErrorMessage = ex.Message;
-                _logger.LogWarning($"Failed sending for DispatchLog {log.Id}");
+                logger.LogWarning($"Failed sending for DispatchLog {log.Id}");
             }
         }
 

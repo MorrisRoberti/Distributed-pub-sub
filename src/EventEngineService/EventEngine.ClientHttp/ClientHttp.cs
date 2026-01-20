@@ -4,20 +4,16 @@ using System.Net.Http;
 using Microsoft.Extensions.Http;
 namespace EventEngine.ClientHttp;
 
-public class ClientHttp : IClientHttp
+// IHttpClientFactory is the .NET service that handles the HttpClient lifecycle
+// with the Factory it's possible to create different types of HttpClients
+public class ClientHttp(IHttpClientFactory httpClientFactory) : IClientHttp
 {
-    private readonly IHttpClientFactory _httpClientFactory;
-
-    public ClientHttp(IHttpClientFactory httpClientFactory)
-    {
-        _httpClientFactory = httpClientFactory;
-    }
 
     public async Task<(bool IsSuccess, int? StatusCode, string? Error)> SendNotificationAsync(string url, string payload, CancellationToken cancellationToken)
     {
         try
         {
-            var client = _httpClientFactory.CreateClient("ClientHttp");
+            var client = httpClientFactory.CreateClient("ClientHttp");
             var content = new StringContent(payload, Encoding.UTF8, "application/json");
 
             // http call to url, with content 

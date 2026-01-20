@@ -8,6 +8,7 @@ namespace EventEngine.Business;
 
 public class Business(IRepository repository, ILogger<Business> logger) : IBusiness
 {
+    // Creates the Event and returns the Id
     public async Task<Guid> CreateEventAsync(EventDTO _event, CancellationToken cancellationToken = default)
     {
         Event evCreated = await repository.CreateEventAsync(_event.EventType, _event.Payload, cancellationToken);
@@ -17,9 +18,10 @@ public class Business(IRepository repository, ILogger<Business> logger) : IBusin
         return evCreated.Id;
     }
 
+    // Fetches the Event with eventId from db
     public async Task<EventDTO?> GetEventAsync(Guid eventId, CancellationToken cancellationToken = default)
     {
-        var _event = await repository.GetEventAsync(eventId);
+        var _event = await repository.GetEventAsync(eventId, cancellationToken);
 
         if (_event is null)
             return null;

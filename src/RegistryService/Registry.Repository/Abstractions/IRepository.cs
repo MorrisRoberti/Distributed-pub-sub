@@ -8,10 +8,10 @@ public interface IRepository
 {
 
     Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
-    Task<IDbContextTransaction> BeginTransactionAsync();
-    Task AddOutboxMessageAsync(Subscription subscription, string operation);
-    Task<IEnumerable<OutboxMessage>> GetPendingOutboxMessagesAsync();
-    Task MarkOutboxMessageAsProcessedAsync(Guid id);
+    Task<IDbContextTransaction> BeginTransactionAsync(CancellationToken cancellationToken = default);
+    Task AddOutboxMessageAsync(Subscription subscription, string operation, CancellationToken cancellationToken = default);
+    Task<IEnumerable<OutboxMessage>> GetPendingOutboxMessagesAsync(CancellationToken cancellationToken = default);
+    Task MarkOutboxMessageAsProcessedAsync(Guid id, CancellationToken cancellationToken = default);
     Task<Subscription> CreateSubscriptionAsync(string UserId, string EventType, string CallbackUrl, CancellationToken cancellationToken = default);
     Task<Subscription?> GetSubscriptionAsync(Guid subscriptionId, CancellationToken cancellationToken = default);
     void UpdateSubscription(Subscription subscription);

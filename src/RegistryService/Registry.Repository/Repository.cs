@@ -14,12 +14,12 @@ public class Repository(SubscriptionDbContext subscriptionDbContext) : IReposito
         return await subscriptionDbContext.SaveChangesAsync(cancellationToken);
     }
 
-    public async Task<IDbContextTransaction> BeginTransactionAsync()
+    public async Task<IDbContextTransaction> BeginTransactionAsync(CancellationToken cancellationToken = default)
     {
-        return await subscriptionDbContext.Database.BeginTransactionAsync();
+        return await subscriptionDbContext.Database.BeginTransactionAsync(cancellationToken);
     }
 
-    public async Task AddOutboxMessageAsync(Subscription subscription, string operation)
+    public async Task AddOutboxMessageAsync(Subscription subscription, string operation, CancellationToken cancellationToken = default)
     {
 
         var outboxMessage = new OutboxMessage
@@ -32,24 +32,24 @@ public class Repository(SubscriptionDbContext subscriptionDbContext) : IReposito
         };
 
         // If this fails the exception gets caught at the business level to rollback the transaction
-        await subscriptionDbContext.OutboxMessages.AddAsync(outboxMessage);
+        await subscriptionDbContext.OutboxMessages.AddAsync(outboxMessage, cancellationToken);
     }
 
-    public async Task<IEnumerable<OutboxMessage>> GetPendingOutboxMessagesAsync()
+    public async Task<IEnumerable<OutboxMessage>> GetPendingOutboxMessagesAsync(CancellationToken cancellationToken = default)
     {
         return await subscriptionDbContext.OutboxMessages
             .Where(x => x.ProcessedOnUtc == null) // Search all the non-processed messages
             .OrderBy(x => x.OccurredOnUtc) // It's important to get the messages in the order in which they have been sent
-            .ToListAsync();
+            .ToListAsync(cancellationToken);
     }
 
-    public async Task MarkOutboxMessageAsProcessedAsync(Guid id)
+    public async Task MarkOutboxMessageAsProcessedAsync(Guid id, CancellationToken cancellationToken = default)
     {
-        var message = await subscriptionDbContext.OutboxMessages.FindAsync(id);
+        var message = await subscriptionDbContext.OutboxMessages.FindAsync(id, cancellationToken);
         if (message is not null)
         {
             message.ProcessedOnUtc = DateTime.UtcNow;
-            await subscriptionDbContext.SaveChangesAsync();
+            await subscriptionDbContext.SaveChangesAsync(cancellationToken);
         }
     }
     public async Task<Subscription> CreateSubscriptionAsync(string UserId, string EventType, string CallbackUrl, CancellationToken cancellationToken = default)

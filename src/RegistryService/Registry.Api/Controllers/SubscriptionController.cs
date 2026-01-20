@@ -19,7 +19,7 @@ public class SubscriptionController(IBusiness business, ILogger<SubscriptionCont
     {
         if (subscription is null || subscription.UserId is null)
         {
-            logger.LogWarning($"HTTP POST: subscription was invalid");
+            logger.LogWarning($"HTTP POST: Subscription was invalid");
             return BadRequest();
         }
 
@@ -39,7 +39,7 @@ public class SubscriptionController(IBusiness business, ILogger<SubscriptionCont
         }
 
         // Actually all the code until here should be put into an authorization controller
-        logger.LogInformation($"HTTP POST: Received request to create a subscription for User {subscription.UserId}");
+        logger.LogInformation($"HTTP POST: Received request to create a Subscription for User {subscription.UserId}");
 
         Guid subId = await business.CreateSubscriptionAsync(subscription);
 
@@ -51,7 +51,7 @@ public class SubscriptionController(IBusiness business, ILogger<SubscriptionCont
             ApiToken = authResult.ApiToken
         };
 
-        logger.LogInformation($"HTTP POST: Successfully created subscription {subId}");
+        logger.LogInformation($"HTTP POST: Successfully created Subscription {subId}");
 
         return CreatedAtAction(nameof(GetSubscription), new { subscriptionId = subId }, response);
     }
@@ -61,7 +61,7 @@ public class SubscriptionController(IBusiness business, ILogger<SubscriptionCont
     [HttpGet("{subscriptionId:guid}", Name = "GetSubscription")]
     public async Task<ActionResult<SubscriptionDTO?>> GetSubscription(Guid subscriptionId)
     {
-        logger.LogInformation($"HTTP GET: Received request to read subscription with Id {subscriptionId}");
+        logger.LogInformation($"HTTP GET: Received request to read Subscription with Id {subscriptionId}");
 
         SubscriptionDTO? sub = await business.GetSubscriptionAsync(subscriptionId);
 
@@ -71,7 +71,7 @@ public class SubscriptionController(IBusiness business, ILogger<SubscriptionCont
             return NotFound(new { Message = $"Subscription {subscriptionId} not found" });
         }
 
-        logger.LogInformation($"HTTP GET: Successfully read subscription {subscriptionId}");
+        logger.LogInformation($"HTTP GET: Successfully read Subscription {subscriptionId}");
 
         return Ok(sub);
     }
@@ -81,7 +81,7 @@ public class SubscriptionController(IBusiness business, ILogger<SubscriptionCont
     public async Task<ActionResult<SubscriptionDTO>> UpdateSubscription(Guid subscriptionId, SubscriptionDTO subscription)
     {
 
-        logger.LogInformation($"HTTP PUT: Received request to update subscription with Id {subscriptionId}");
+        logger.LogInformation($"HTTP PUT: Received request to update Subscription with Id {subscriptionId}");
 
         SubscriptionDTO? sub = await business.UpdateSubscriptionAsync(subscriptionId, subscription);
 
@@ -91,7 +91,7 @@ public class SubscriptionController(IBusiness business, ILogger<SubscriptionCont
             return NotFound(new { Message = $"Subscription {subscriptionId} not found" });
         }
 
-        logger.LogInformation($"HTTP PUT: Successfully updated subscription {subscriptionId}");
+        logger.LogInformation($"HTTP PUT: Successfully updated Subscription {subscriptionId}");
 
 
         return Ok(sub);
@@ -102,7 +102,7 @@ public class SubscriptionController(IBusiness business, ILogger<SubscriptionCont
     public async Task<ActionResult> DeleteSubscription(Guid subscriptionId)
     {
 
-        logger.LogInformation($"HTTP DELETE: Received request to delete subscription with Id {subscriptionId}");
+        logger.LogInformation($"HTTP DELETE: Received request to delete Subscription with Id {subscriptionId}");
 
         bool result = await business.DeleteSubscriptionAsync(subscriptionId);
 
@@ -112,7 +112,7 @@ public class SubscriptionController(IBusiness business, ILogger<SubscriptionCont
             return NotFound(new { Message = $"Subscription {subscriptionId} not found" });
         }
 
-        logger.LogInformation($"HTTP DELETE: Successfully deleted subscription with Id {subscriptionId}");
+        logger.LogInformation($"HTTP DELETE: Successfully deleted Subscription with Id {subscriptionId}");
 
 
         return NoContent();

@@ -12,14 +12,14 @@ public class Business(IRepository repository, ILogger<Business> logger) : IBusin
     public async Task<Guid> CreateSubscriptionAsync(SubscriptionDTO subscription, CancellationToken cancellationToken = default)
     {
 
-        using var transaction = await repository.BeginTransactionAsync();
+        using var transaction = await repository.BeginTransactionAsync(cancellationToken);
         try
         {
 
             Subscription subCreated = await repository.CreateSubscriptionAsync(subscription.UserId, subscription.EventType, subscription.CallbackUrl, cancellationToken);
 
             // Once the subscription is created I create an entry in the OutboxMessages table, for kafka sync
-            await repository.AddOutboxMessageAsync(subCreated, "Created");
+            await repository.AddOutboxMessageAsync(subCreated, "Created", cancellationToken);
 
             await repository.SaveChangesAsync(cancellationToken);
 
@@ -40,7 +40,7 @@ public class Business(IRepository repository, ILogger<Business> logger) : IBusin
     public async Task<SubscriptionDTO?> GetSubscriptionAsync(Guid subscriptionId, CancellationToken cancellationToken = default)
     {
 
-        var sub = await repository.GetSubscriptionAsync(subscriptionId);
+        var sub = await repository.GetSubscriptionAsync(subscriptionId, cancellationToken);
 
         if (sub is null)
             return null;
@@ -59,12 +59,12 @@ public class Business(IRepository repository, ILogger<Business> logger) : IBusin
     public async Task<SubscriptionDTO?> UpdateSubscriptionAsync(Guid subscriptionId, SubscriptionDTO subscription, CancellationToken cancellationToken = default)
     {
         // Get the Subcription from db
-        var sub = await repository.GetSubscriptionAsync(subscriptionId);
+        var sub = await repository.GetSubscriptionAsync(subscriptionId, cancellationToken);
 
         if (sub is null)
             return null;
 
-        using var transaction = await repository.BeginTransactionAsync();
+        using var transaction = await repository.BeginTransactionAsync(cancellationToken);
         try
         {
 
@@ -79,7 +79,7 @@ public class Business(IRepository repository, ILogger<Business> logger) : IBusin
             repository.UpdateSubscription(sub);
 
             // Create a new record in OutboxMessages to signal that a record has been updated
-            await repository.AddOutboxMessageAsync(sub, "Updated");
+            await repository.AddOutboxMessageAsync(sub, "Updated", cancellationToken);
 
             await repository.SaveChangesAsync(cancellationToken);
 
@@ -106,12 +106,12 @@ public class Business(IRepository repository, ILogger<Business> logger) : IBusin
 
     public async Task<bool> DeleteSubscriptionAsync(Guid subscriptionId, CancellationToken cancellationToken = default)
     {
-        var sub = await repository.GetSubscriptionAsync(subscriptionId);
+        var sub = await repository.GetSubscriptionAsync(subscriptionId, cancellationToken);
 
         if (sub is null)
             return false;
 
-        using var transaction = await repository.BeginTransactionAsync();
+        using var transaction = await repository.BeginTransactionAsync(cancellationToken);
         try
         {
 
@@ -121,7 +121,7 @@ public class Business(IRepository repository, ILogger<Business> logger) : IBusin
             // I use the update because i'm doing a soft delete
             repository.UpdateSubscription(sub);
 
-            await repository.AddOutboxMessageAsync(sub, "Deleted");
+            await repository.AddOutboxMessageAsync(sub, "Deleted", cancellationToken);
 
             await repository.SaveChangesAsync(cancellationToken);
 

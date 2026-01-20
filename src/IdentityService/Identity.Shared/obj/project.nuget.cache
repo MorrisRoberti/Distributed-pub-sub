@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "1O4ZysoOVkcStnzsqP5HitM7Te07ePWmOj0zegFo1jQglqa/kfo/stsgIPzK2kTy7RYrhJvKgm1PoTD+3l0vZg==",
+  "dgSpecHash": "YSrK/0vXUaN2K8gJAx+0F+fZJ+mskzrytLa3HaP00XvSlRJeuIYMiNms4rdYjpVNxB4oFq5IxpJU4AzjAiiixA==",
   "success": true,
-  "projectFilePath": "/mnt/c/workspace_personale/Distributed-pub-sub/src/IdentityService/Identity.Shared/Identity.Shared.csproj",
+  "projectFilePath": "/home/morris/Workspace/dotnet_projects/distributed_pub_sub/src/IdentityService/Identity.Shared/Identity.Shared.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

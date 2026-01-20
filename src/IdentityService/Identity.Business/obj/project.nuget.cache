@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "HYrimr1lwFZ8TERTWMZ0kaMLpVzr3hzDPwXyx/ESQWn6rFTrcKlEeUN4c5/9jC0plOlm2s1bRZEH6/EEzCKZmQ==",
+  "dgSpecHash": "vyRmzqTfbdM/XpIUIoKlCdcHPpZvJogXC5LB+8l6WssJpfKSCwTfQjqB9R8kZ1AK+S2A32TAuzLudw4dc6YelQ==",
   "success": true,
-  "projectFilePath": "/mnt/c/workspace_personale/Distributed-pub-sub/src/IdentityService/Identity.Business/Identity.Business.csproj",
+  "projectFilePath": "/home/morris/Workspace/dotnet_projects/distributed_pub_sub/src/IdentityService/Identity.Business/Identity.Business.csproj",
   "expectedPackageFiles": [
     "/home/morris/.nuget/packages/azure.core/1.25.0/azure.core.1.25.0.nupkg.sha512",
     "/home/morris/.nuget/packages/azure.identity/1.7.0/azure.identity.1.7.0.nupkg.sha512",
@@ -58,7 +58,8 @@
     "/home/morris/.nuget/packages/system.text.encodings.web/6.0.0/system.text.encodings.web.6.0.0.nupkg.sha512",
     "/home/morris/.nuget/packages/system.text.json/4.7.2/system.text.json.4.7.2.nupkg.sha512",
     "/home/morris/.nuget/packages/system.threading.tasks.extensions/4.5.4/system.threading.tasks.extensions.4.5.4.nupkg.sha512",
-    "/home/morris/.nuget/packages/system.windows.extensions/6.0.0/system.windows.extensions.6.0.0.nupkg.sha512"
+    "/home/morris/.nuget/packages/system.windows.extensions/6.0.0/system.windows.extensions.6.0.0.nupkg.sha512",
+    "/home/morris/.nuget/packages/identity.shared/1.0.1/identity.shared.1.0.1.nupkg.sha512"
   ],
   "logs": []
 }

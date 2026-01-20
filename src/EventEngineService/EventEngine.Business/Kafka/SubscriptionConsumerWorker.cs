@@ -11,34 +11,35 @@ namespace EventEngine.Business.Kafka;
 
 public class SubscriptionConsumerWorker : BackgroundService
 {
-    private readonly ILogger<SubscriptionConsumerWorker> _logger;
-    private readonly IServiceProvider _serviceProvider;
-    private readonly IConsumer<string, string> _consumer;
-    private readonly IConfiguration _configuration;
-    private readonly ConsumerConfig _config;
+    private readonly ILogger<SubscriptionConsumerWorker> logger;
+    private readonly IServiceProvider serviceProvider;
+    private readonly IConsumer<string, string> consumer;
+    private readonly IConfiguration configuration;
+    private readonly ConsumerConfig config;
 
-    public SubscriptionConsumerWorker(ILogger<SubscriptionConsumerWorker> logger, IServiceProvider serviceProvider, IConfiguration configuration)
+    public SubscriptionConsumerWorker(ILogger<SubscriptionConsumerWorker> _logger, IServiceProvider _serviceProvider, IConfiguration _configuration)
     {
-        _logger = logger;
-        _serviceProvider = serviceProvider;
-        _configuration = configuration;
-        var bootstrapServers = _configuration["Kafka:BootstrapServers"] ?? "localhost:9092";
-        _config = new ConsumerConfig
+        logger = _logger;
+        serviceProvider = _serviceProvider;
+        configuration = _configuration;
+        // I tell the consumer where kafka is listening on
+        var bootstrapServers = configuration["Kafka:BootstrapServers"] ?? "localhost:9092";
+        config = new ConsumerConfig
         {
             BootstrapServers = bootstrapServers,
-            GroupId = "event-engine-group",
-            AutoOffsetReset = AutoOffsetReset.Earliest,
+            GroupId = "event-engine-group", // Defining the consumer group
+            AutoOffsetReset = AutoOffsetReset.Earliest, // Recovers all the messages of the topic, the old ones to
             EnableAutoCommit = true
         };
-        _consumer = new ConsumerBuilder<string, string>(_config).Build();
+        consumer = new ConsumerBuilder<string, string>(config).Build();
     }
 
     protected override async Task ExecuteAsync(CancellationToken cancellationToken)
     {
         // i subscribe my consumer to the corresponding kafka topic
-        _consumer.Subscribe("subscription-updates-topic");
+        consumer.Subscribe("subscription-updates-topic");
 
-        _logger.LogInformation("EventEngine Consumer listening...");
+        logger.LogInformation("EventEngine Consumer listening...");
 
         try
         {
@@ -47,7 +48,7 @@ public class SubscriptionConsumerWorker : BackgroundService
                 try
                 {
                     // i consume the record in the topic queue
-                    var result = _consumer.Consume(cancellationToken);
+                    var result = consumer.Consume(cancellationToken);
 
                     if (result is not null)
                     {
@@ -61,26 +62,26 @@ public class SubscriptionConsumerWorker : BackgroundService
                             if (subscription is not null)
                             {
 
-                                _logger.LogInformation($"Received subscription: {subscription.Id}");
+                                logger.LogInformation($"Received subscription: {subscription.Id}");
 
                                 await ProcessMessage(subscription);
                             }
                         }
                         catch (JsonException ex)
                         {
-                            _logger.LogError($"The deserialization of consumer message {result.Message.Value} failed");
+                            logger.LogError($"The deserialization of consumer message {result.Message.Value} failed");
                         }
                     }
                 }
                 catch (ConsumeException e)
                 {
-                    _logger.LogError($"Errore consuming: {e.Error.Reason}");
+                    logger.LogError($"Errore consuming: {e.Error.Reason}");
                 }
             }
         }
         catch (OperationCanceledException)
         {
-            _consumer.Close();
+            consumer.Close();
         }
     }
 
@@ -88,12 +89,12 @@ public class SubscriptionConsumerWorker : BackgroundService
     {
         if (subscription is null) return;
 
-        using (var scope = _serviceProvider.CreateScope())
+        using (var scope = serviceProvider.CreateScope())
         {
             // i get the repo and update the Subscription table with the updated subscription
             var repository = scope.ServiceProvider.GetRequiredService<IRepository>();
             await repository.UpsertSubscriptionAsync(subscription);
-            _logger.LogInformation($"Synchronization of local db with subscription {subscription.Id} completed.");
+            logger.LogInformation($"Synchronization of local db with subscription {subscription.Id} completed.");
         }
     }
 }

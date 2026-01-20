@@ -16,7 +16,7 @@ public class IdentityController(IBusiness business, ILogger<IdentityController> 
     [HttpPost(Name = "AuthorizeAsync")]
     public async Task<ActionResult> AuthorizeAsync(UserCredentialsDTO userCredentials)
     {
-        logger.LogInformation($"HTTP POST: Received request to authorize user with id {userCredentials.UserId}");
+        logger.LogInformation($"HTTP POST: Received request to authorize User with id {userCredentials.UserId}");
 
         // i get the credentials and check if the UserId is already in the db
         // I use the credentials field to check the result of auth, and the message field to see what was the cause of error
@@ -25,7 +25,7 @@ public class IdentityController(IBusiness business, ILogger<IdentityController> 
         // controls and logs
         if (credentials is null)
         {
-            logger.LogInformation($"HTTP POST: Error in authorization of user with id {userCredentials.UserId} -> {errorMessage}");
+            logger.LogWarning($"HTTP POST: Error in authorization of User with id {userCredentials.UserId} -> {errorMessage}");
             return errorMessage switch
             {
                 "Wrong Token" => Unauthorized(new { error = errorMessage }),
@@ -34,7 +34,7 @@ public class IdentityController(IBusiness business, ILogger<IdentityController> 
             };
         }
 
-        logger.LogInformation($"HTTP POST: Successfully authorized user with id {userCredentials.UserId}");
+        logger.LogInformation($"HTTP POST: Successfully authorized User with id {userCredentials.UserId}");
 
         return Ok(credentials);
     }
