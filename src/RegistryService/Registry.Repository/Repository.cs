@@ -31,6 +31,7 @@ public class Repository(SubscriptionDbContext subscriptionDbContext) : IReposito
             OccurredOnUtc = DateTime.UtcNow
         };
 
+        // If this fails the exception gets caught at the business level to rollback the transaction
         await subscriptionDbContext.OutboxMessages.AddAsync(outboxMessage);
     }
 
@@ -60,6 +61,7 @@ public class Repository(SubscriptionDbContext subscriptionDbContext) : IReposito
         sub.CallbackUrl = CallbackUrl;
         sub.IsActive = true;
 
+        // If this fails the exception gets caught at the business level to rollback the transaction
         await subscriptionDbContext.Subscriptions.AddAsync(sub, cancellationToken);
         return sub;
     }

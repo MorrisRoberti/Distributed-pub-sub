@@ -1,27 +1,27 @@
 {
   "format": 1,
   "restore": {
-    "/home/morris/Workspace/dotnet_projects/distributed_pub_sub/src/RegistryService/Registry.Shared/Registry.Shared.csproj": {}
+    "/mnt/c/workspace_personale/Distributed-pub-sub/src/RegistryService/Registry.Shared/Registry.Shared.csproj": {}
   },
   "projects": {
-    "/home/morris/Workspace/dotnet_projects/distributed_pub_sub/src/RegistryService/Registry.Shared/Registry.Shared.csproj": {
+    "/mnt/c/workspace_personale/Distributed-pub-sub/src/RegistryService/Registry.Shared/Registry.Shared.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/morris/Workspace/dotnet_projects/distributed_pub_sub/src/RegistryService/Registry.Shared/Registry.Shared.csproj",
+        "projectUniqueName": "/mnt/c/workspace_personale/Distributed-pub-sub/src/RegistryService/Registry.Shared/Registry.Shared.csproj",
         "projectName": "Registry.Shared",
-        "projectPath": "/home/morris/Workspace/dotnet_projects/distributed_pub_sub/src/RegistryService/Registry.Shared/Registry.Shared.csproj",
+        "projectPath": "/mnt/c/workspace_personale/Distributed-pub-sub/src/RegistryService/Registry.Shared/Registry.Shared.csproj",
         "packagesPath": "/home/morris/.nuget/packages/",
-        "outputPath": "/home/morris/Workspace/dotnet_projects/distributed_pub_sub/src/RegistryService/Registry.Shared/obj/",
+        "outputPath": "/mnt/c/workspace_personale/Distributed-pub-sub/src/RegistryService/Registry.Shared/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/home/morris/Workspace/dotnet_projects/distributed_pub_sub/nuget.config",
+          "/mnt/c/workspace_personale/Distributed-pub-sub/nuget.config",
           "/home/morris/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
-          "/home/morris/Workspace/dotnet_projects/distributed_pub_sub/LocalNuGet": {},
+          "/mnt/c/workspace_personale/Distributed-pub-sub/LocalNuGet": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -55,7 +55,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/8.0.122/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/8.0.121/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

@@ -8,7 +8,6 @@ public class SubscriptionDTO
     [Required]
     public string UserId { get; set; } = string.Empty;
 
-
     [Required]
     public string EventType { get; set; } = string.Empty;
 
@@ -17,10 +16,12 @@ public class SubscriptionDTO
 
     [Required]
     public bool IsActive { get; set; } = true;
+
     [JsonIgnore]
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
-    public DateTime? DeletedAt { get; set; } = DateTime.UtcNow;
+    [JsonIgnore]
+    public DateTime? DeletedAt { get; set; } = null;
 
-    public string ApiToken { get; set; }
+    public string ApiToken { get; set; } = string.Empty;
 }

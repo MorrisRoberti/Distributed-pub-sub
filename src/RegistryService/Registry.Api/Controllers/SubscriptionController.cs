@@ -6,29 +6,20 @@ using Identity.ClientHttp;
 using Identity.Shared;
 namespace Registry.Api.Controllers;
 
-
+// The [Route] attribute tells the program that this is a controller, so the routing middleware will make the HTTP request available in here
 [ApiController]
 [Route("api/subscription")]
-public class SubscriptionController : ControllerBase
+public class SubscriptionController(IBusiness business, ILogger<SubscriptionController> logger, IdentityClientHttp identityClientHttp) : ControllerBase
 {
 
-    private readonly IBusiness _business;
-    private readonly ILogger<SubscriptionController> _logger;
-    private readonly IdentityClientHttp _identityClient;
-
-    public SubscriptionController(IBusiness business, ILogger<SubscriptionController> logger, IdentityClientHttp identityClient)
-    {
-        _business = business;
-        _logger = logger;
-        _identityClient = identityClient;
-    }
-
+    // This is a POST to create subscription. The first thing it actually does is call the IdentityService to authorize the User
+    // NOTE: the authorization code should be put inside a middleware for all requests, in this way it would be transparent to the controller
     [HttpPost("subscribe", Name = "CreateSubscription")]
     public async Task<ActionResult> CreateSubscription(SubscriptionDTO? subscription)
     {
         if (subscription is null || subscription.UserId is null)
         {
-            _logger.LogWarning($"HTTP POST: subscription was invalid");
+            logger.LogWarning($"HTTP POST: subscription was invalid");
             return BadRequest();
         }
 
@@ -38,27 +29,29 @@ public class SubscriptionController : ControllerBase
             ApiToken = subscription.ApiToken
         };
 
-        var (authResult, error) = await _identityClient.AuthorizeAsync(authRequest);
+        var (authResult, error) = await identityClientHttp.AuthorizeAsync(authRequest);
 
         if (authResult == null)
         {
-            _logger.LogWarning($"HTTP POST: Auth failed for User {subscription.UserId}. Error: {error}");
+            logger.LogWarning($"HTTP POST: Auth failed for User {subscription.UserId}. Error: {error}");
 
             return StatusCode(StatusCodes.Status401Unauthorized, new { Message = error });
         }
 
-        _logger.LogInformation($"HTTP POST: Received request to create a subscription for User {subscription.UserId}");
+        // Actually all the code until here should be put into an authorization controller
+        logger.LogInformation($"HTTP POST: Received request to create a subscription for User {subscription.UserId}");
 
-        Guid subId = await _business.CreateSubscriptionAsync(subscription);
+        Guid subId = await business.CreateSubscriptionAsync(subscription);
 
-
+        // The returned object should be a separate DTO class
+        // I'm not sure this is the right way to return a token
         var response = new
         {
             SubscriptionId = subId,
             ApiToken = authResult.ApiToken
         };
 
-        _logger.LogInformation($"HTTP POST: Successfully created subscription {subId}");
+        logger.LogInformation($"HTTP POST: Successfully created subscription {subId}");
 
         return CreatedAtAction(nameof(GetSubscription), new { subscriptionId = subId }, response);
     }
@@ -66,17 +59,17 @@ public class SubscriptionController : ControllerBase
     [HttpGet("{subscriptionId:guid}", Name = "GetSubscription")]
     public async Task<ActionResult<SubscriptionDTO?>> GetSubscription(Guid subscriptionId)
     {
-        _logger.LogInformation($"HTTP GET: Received request to read subscription with Id {subscriptionId}");
+        logger.LogInformation($"HTTP GET: Received request to read subscription with Id {subscriptionId}");
 
-        SubscriptionDTO? sub = await _business.GetSubscriptionAsync(subscriptionId);
+        SubscriptionDTO? sub = await business.GetSubscriptionAsync(subscriptionId);
 
         if (sub is null)
         {
-            _logger.LogWarning($"HTTP GET: Subscription {subscriptionId} not found");
+            logger.LogWarning($"HTTP GET: Subscription {subscriptionId} not found");
             return NotFound(new { Message = $"Subscription {subscriptionId} not found" });
         }
 
-        _logger.LogInformation($"HTTP GET: Successfully read subscription {subscriptionId}");
+        logger.LogInformation($"HTTP GET: Successfully read subscription {subscriptionId}");
 
         return Ok(sub);
     }
@@ -85,17 +78,17 @@ public class SubscriptionController : ControllerBase
     public async Task<ActionResult<SubscriptionDTO>> UpdateSubscription(Guid subscriptionId, SubscriptionDTO subscription)
     {
 
-        _logger.LogInformation($"HTTP PUT: Received request to update subscription with Id {subscriptionId}");
+        logger.LogInformation($"HTTP PUT: Received request to update subscription with Id {subscriptionId}");
 
-        SubscriptionDTO? sub = await _business.UpdateSubscriptionAsync(subscriptionId, subscription);
+        SubscriptionDTO? sub = await business.UpdateSubscriptionAsync(subscriptionId, subscription);
 
         if (sub is null)
         {
-            _logger.LogWarning($"HTTP PUT: Subscription {subscriptionId} not found");
+            logger.LogWarning($"HTTP PUT: Subscription {subscriptionId} not found");
             return NotFound(new { Message = $"Subscription {subscriptionId} not found" });
         }
 
-        _logger.LogInformation($"HTTP PUT: Successfully updated subscription {subscriptionId}");
+        logger.LogInformation($"HTTP PUT: Successfully updated subscription {subscriptionId}");
 
 
         return Ok(sub);
@@ -106,17 +99,17 @@ public class SubscriptionController : ControllerBase
     public async Task<ActionResult> DeleteSubscription(Guid subscriptionId)
     {
 
-        _logger.LogInformation($"HTTP DELETE: Received request to delete subscription with Id {subscriptionId}");
+        logger.LogInformation($"HTTP DELETE: Received request to delete subscription with Id {subscriptionId}");
 
-        bool result = await _business.DeleteSubscriptionAsync(subscriptionId);
+        bool result = await business.DeleteSubscriptionAsync(subscriptionId);
 
         if (!result)
         {
-            _logger.LogWarning($"HTTP DELETE: Subscription {subscriptionId} not found");
+            logger.LogWarning($"HTTP DELETE: Subscription {subscriptionId} not found");
             return NotFound(new { Message = $"Subscription {subscriptionId} not found" });
         }
 
-        _logger.LogInformation($"HTTP DELETE: Successfully deleted subscription with Id {subscriptionId}");
+        logger.LogInformation($"HTTP DELETE: Successfully deleted subscription with Id {subscriptionId}");
 
 
         return NoContent();

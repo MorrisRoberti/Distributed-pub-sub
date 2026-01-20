@@ -18,10 +18,12 @@ public class Business(IRepository repository, ILogger<Business> logger) : IBusin
 
             Subscription subCreated = await repository.CreateSubscriptionAsync(subscription.UserId, subscription.EventType, subscription.CallbackUrl, cancellationToken);
 
+            // Once the subscription is created I create an entry in the OutboxMessages table, for kafka sync
             await repository.AddOutboxMessageAsync(subCreated, "Created");
 
             await repository.SaveChangesAsync(cancellationToken);
 
+            // if no errors occur I should reach this point with objects correctly create in the db, so I can commit
             await transaction.CommitAsync();
 
             return subCreated.Id;
@@ -29,6 +31,7 @@ public class Business(IRepository repository, ILogger<Business> logger) : IBusin
         catch (Exception ex)
         {
             logger.LogError(ex, "Error while creating subscription on db");
+            // Actually this is a bit useless because with "using" EF Core automatically rollsback the transaction if there is an error
             await transaction.RollbackAsync();
             throw;
         }
