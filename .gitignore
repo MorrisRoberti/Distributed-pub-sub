@@ -1,0 +1,22 @@
+# --- REGOLE STANDARD (Ignora la spazzatura) ---
+[Bb]in/
+[Oo]bj/
+.vs/
+.vscode/
+*.user
+
+# --- ECCEZIONI (Tieni questi file, non importa cosa dicono le regole sopra) ---
+
+# Mantieni i file di progetto e soluzione
+!*.sln
+!*.csproj
+
+# Mantieni la cartella LocalNuGet e i suoi contenuti
+!LocalNuGet/
+!LocalNuGet/**/*
+!LocalNuGet/**/*.nupkg
+
+# Mantieni i file di configurazione
+!appsettings*.json
+!Dockerfile
+!docker-compose*.yml
