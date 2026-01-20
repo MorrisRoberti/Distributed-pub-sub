@@ -8,20 +8,26 @@ namespace Identity.Repository;
 
 public class Repository(IdentityDbContext identityDbContext) : IRepository
 {
+    // Saves changes in the db
     public async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
         return await identityDbContext.SaveChangesAsync(cancellationToken);
     }
 
+    // Actually I don't need it but here it is, could be useful for future implementations
     public async Task<IDbContextTransaction> BeginTransactionAsync()
     {
         return await identityDbContext.Database.BeginTransactionAsync();
     }
 
-    public async Task<User> GetUserFromIdAsync(string userId, CancellationToken cancellationToken = default)
+    public async Task<User?> GetUserFromIdAsync(string userId, CancellationToken cancellationToken = default)
     {
-        return await identityDbContext.Users.Where(u => u.UserId == userId).FirstOrDefaultAsync(cancellationToken);
+        return await identityDbContext.Users
+        .FindAsync(userId, cancellationToken);
     }
+
+    // I create the user from the userId and apiToken, with the policies of expiration being: 
+    // it expires a month from now, the token can be used only for 100 requests before expiring
     public async Task<User> CreateUserAsync(string userId, string apiToken, CancellationToken cancellationToken = default)
     {
         var newUser = new User

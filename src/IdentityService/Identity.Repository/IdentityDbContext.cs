@@ -6,8 +6,9 @@ public class IdentityDbContext(DbContextOptions<IdentityDbContext> dbContextOpti
 {
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<User>().HasKey(x => x.UserId);
-        modelBuilder.Entity<User>().HasKey(x => x.ApiToken);
+        // ATTENTION: before, I did something like ...HasKey(x => x.UserId); ...HasKey(x => x.ApiToken)
+        // this is wrong because it replaces the first key with the second, it doesn't create a composite key
+        modelBuilder.Entity<User>().HasKey(x => new { x.UserId, x.ApiToken });
 
     }
 

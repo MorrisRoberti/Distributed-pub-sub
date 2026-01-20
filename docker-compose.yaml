@@ -26,28 +26,28 @@ services:
     ports:
       - "9092:9092"
     environment:
-      KAFKA_BROKER_ID: 1
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:29092,PLAINTEXT_HOST://localhost:9092
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
-      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
-      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_BROKER_ID: 1 # Unique broker ID
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181  # Zookeeper connection
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:29092,PLAINTEXT_HOST://localhost:9092 # Tells where to find kafka for the containers and host
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT # Unencrypted communication
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT 
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1 # Since we have only one broker there is no data replication
     networks:
       - registry-net
     healthcheck:
-      test: ["CMD-SHELL", "nc -z localhost 29092 || exit 1"]
+      test: ["CMD-SHELL", "nc -z localhost 29092 || exit 1"] # Checks every 10 seconds if kafka is reachable on port 29092
       interval: 10s
       timeout: 5s
       retries: 5
 
   identity-api:
     build:
-      context: .
-      dockerfile: src/IdentityService/Identity.Api/Dockerfile
+      context: . # Root of the project, where docker starts to looking for the Dockerfile
+      dockerfile: src/IdentityService/Identity.Api/Dockerfile 
     ports:
       - "5001:8080"
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_ENVIRONMENT=Development # Tells ASP.NET Core to run in Development mode
       - ConnectionStrings__IdentityDbContext=Server=sql-server;Database=IdentityDB;User Id=sa;Password=YourSecurePassword123!;Encrypt=False;TrustServerCertificate=True;
     depends_on:
       sql-server:
@@ -57,14 +57,14 @@ services:
 
   registry-api:
     build:
-      context: .
+      context: . # Root of the project, where docker starts to looking for the Dockerfile
       dockerfile: src/RegistryService/Registry.Api/Dockerfile
     ports:
       - "5000:8080"
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_ENVIRONMENT=Development # Tells ASP.NET Core to run in Development mode
       - IdentityService__Url=http://identity-api:8080
-      - Kafka__BootstrapServers=kafka:29092
+      - Kafka__BootstrapServers=kafka:29092 # Tells the service where to find kafka
       - ConnectionStrings__SubscriptionDbContext=Server=sql-server;Database=RegistryDB;User Id=sa;Password=YourSecurePassword123!;Encrypt=False;TrustServerCertificate=True;
     depends_on:
       identity-api:
@@ -78,13 +78,13 @@ services:
 
   event-engine-api:
     build:
-      context: .
+      context: . # Root of the project, where docker starts to looking for the Dockerfile
       dockerfile: src/EventEngineService/EventEngine.Api/Dockerfile
     ports:
       - "5002:8080"
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - Kafka__BootstrapServers=kafka:29092
+      - ASPNETCORE_ENVIRONMENT=Development # Tells ASP.NET Core to run in Development mode
+      - Kafka__BootstrapServers=kafka:29092 # Tells the service where to find kafka
       - ConnectionStrings__EventEngineDbContext=Server=sql-server;Database=EventEngineDB;User Id=sa;Password=YourSecurePassword123!;Encrypt=False;TrustServerCertificate=True;
     depends_on:
       kafka:

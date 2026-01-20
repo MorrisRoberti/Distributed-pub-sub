@@ -5,9 +5,13 @@ using Identity.Shared;
 using Microsoft.Extensions.Logging;
 namespace Identity.Business;
 
+// This is the Primary Constructor syntax, is equivalent to the normal constructor but the fields are not necessarely readonly
+// so we have to pay attention to not reassign them inside the class
 public class Business(IRepository repository, ILogger<Business> logger) : IBusiness
 {
-    public async Task<(UserCredentialsDTO? credentials, string message)> AuthorizeUserAsync(UserCredentialsDTO userCredentials, CancellationToken cancellationToken = default)
+    // I don't need transactions here because with SaveChangesAsync, EF Core already treats this as an atomic transaction
+    // NOTE: if something goes wrong with the connection to the db or stuff like that the service breaks because there is no exception handling yet
+    public async Task<(UserCredentialsDTO? credentials, string errorMessage)> AuthorizeUserAsync(UserCredentialsDTO userCredentials, CancellationToken cancellationToken = default)
     {
         User? user = await repository.GetUserFromIdAsync(userCredentials.UserId, cancellationToken);
 
