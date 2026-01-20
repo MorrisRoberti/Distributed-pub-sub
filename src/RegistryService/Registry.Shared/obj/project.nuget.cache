@@ -1,8 +1,0 @@
-{
-  "version": 2,
-  "dgSpecHash": "3s23IqrHO87ZO1lvM9pVtmKy8vhUynQGqtt4l3mwC6rMJEGYrKsFMEON3FnBmucmIGSvZxR0th8qKcvCFlLFiA==",
-  "success": true,
-  "projectFilePath": "/home/morris/Workspace/dotnet_projects/distributed_pub_sub/src/RegistryService/Registry.Shared/Registry.Shared.csproj",
-  "expectedPackageFiles": [],
-  "logs": []
-}
