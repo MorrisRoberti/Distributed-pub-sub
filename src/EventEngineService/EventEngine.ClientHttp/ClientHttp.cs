@@ -13,10 +13,12 @@ public class ClientHttp(IHttpClientFactory httpClientFactory) : IClientHttp
     {
         try
         {
+            // I wanted to use typed client but apparently httpclientfactory accepts only the string version
             var client = httpClientFactory.CreateClient("ClientHttp");
+            // Using the payload of the Event to insert into the request
             var content = new StringContent(payload, Encoding.UTF8, "application/json");
 
-            // http call to url, with content 
+            // Make an HTTP call to the CallbackUrl of the current Subscription with the Event payload
             var response = await client.PostAsync(url, content, cancellationToken);
 
             if (!response.IsSuccessStatusCode)
