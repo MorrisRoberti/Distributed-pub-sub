@@ -17,6 +17,7 @@ builder.Services.AddDbContext<SubscriptionDbContext>(options => options.UseSqlSe
 builder.Services.AddSwaggerGen();
 
 // Injection of the IdentityHttpClient as a service
+// ATTENTION: it gets registered as Transient
 builder.Services.AddHttpClient<IdentityClientHttp>(client =>
 {
     // Reads the Service url to which the client makes the calls inside the configuration environment (in this case docker-compose -> appsettings.json)
