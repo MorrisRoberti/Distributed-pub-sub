@@ -22,8 +22,7 @@ public class Repository(IdentityDbContext identityDbContext) : IRepository
 
     public async Task<User?> GetUserFromIdAsync(string userId, CancellationToken cancellationToken = default)
     {
-        return await identityDbContext.Users
-        .FindAsync(userId, cancellationToken);
+        return await identityDbContext.Users.Where(u => u.UserId == userId).SingleOrDefaultAsync(cancellationToken);
     }
 
     // I create the user from the userId and apiToken, with the policies of expiration being: 

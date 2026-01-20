@@ -4,22 +4,19 @@ using System.Net.Http;
 using Microsoft.Extensions.Http;
 namespace EventEngine.ClientHttp;
 
-// IHttpClientFactory is the .NET service that handles the HttpClient lifecycle
-// with the Factory it's possible to create different types of HttpClients
-public class ClientHttp(IHttpClientFactory httpClientFactory) : IClientHttp
+public class ClientHttp(HttpClient httpClient) : IClientHttp
 {
 
     public async Task<(bool IsSuccess, int? StatusCode, string? Error)> SendNotificationAsync(string url, string payload, CancellationToken cancellationToken)
     {
         try
         {
-            // I wanted to use typed client but apparently httpclientfactory accepts only the string version
-            var client = httpClientFactory.CreateClient("ClientHttp");
+
             // Using the payload of the Event to insert into the request
             var content = new StringContent(payload, Encoding.UTF8, "application/json");
 
             // Make an HTTP call to the CallbackUrl of the current Subscription with the Event payload
-            var response = await client.PostAsync(url, content, cancellationToken);
+            var response = await httpClient.PostAsync(url, content, cancellationToken);
 
             if (!response.IsSuccessStatusCode)
             {

@@ -29,7 +29,7 @@ builder.Services.AddHostedService<DispatchService>();
 
 // I changed the service registration into a Strongly Typed one
 // The ClientHttp is going to be registered as Transient service
-builder.Services.AddHttpClient<ClientHttp>(client =>
+builder.Services.AddHttpClient<IClientHttp, ClientHttp>(client =>
 {
     // If the client doesn't reply in 10 seconds close the connection
     client.Timeout = TimeSpan.FromSeconds(10);
