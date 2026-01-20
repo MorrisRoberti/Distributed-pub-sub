@@ -34,9 +34,10 @@ public class SubscriptionConsumerWorker : BackgroundService
         consumer = new ConsumerBuilder<string, string>(config).Build();
     }
 
+    // This is executed in the background
     protected override async Task ExecuteAsync(CancellationToken cancellationToken)
     {
-        // i subscribe my consumer to the corresponding kafka topic
+        // Subscribe the consumer to the right kafka topic
         consumer.Subscribe("subscription-updates-topic");
 
         logger.LogInformation("EventEngine Consumer listening...");
@@ -47,7 +48,7 @@ public class SubscriptionConsumerWorker : BackgroundService
             {
                 try
                 {
-                    // i consume the record in the topic queue
+                    // Consumes the record in the topic queue
                     var result = consumer.Consume(cancellationToken);
 
                     if (result is not null)
@@ -55,7 +56,7 @@ public class SubscriptionConsumerWorker : BackgroundService
                         try
                         {
 
-                            // deserialize the data and update the db through ProcessMessage
+                            // Deserialize the data and update the db through ProcessMessage
                             SubscriptionDTO? subscription = JsonSerializer.Deserialize<SubscriptionDTO>(result.Message.Value);
 
 
@@ -85,15 +86,17 @@ public class SubscriptionConsumerWorker : BackgroundService
         }
     }
 
-    private async Task ProcessMessage(SubscriptionDTO subscription)
+    private async Task ProcessMessage(SubscriptionDTO subscription, CancellationToken cancellationToken = default)
     {
         if (subscription is null) return;
 
         using (var scope = serviceProvider.CreateScope())
         {
-            // i get the repo and update the Subscription table with the updated subscription
+            // Gets the Repository service and update the Subscription table with the updated subscription
             var repository = scope.ServiceProvider.GetRequiredService<IRepository>();
-            await repository.UpsertSubscriptionAsync(subscription);
+
+            await repository.UpsertSubscriptionAsync(subscription, cancellationToken);
+
             logger.LogInformation($"Synchronization of local db with subscription {subscription.Id} completed.");
         }
     }

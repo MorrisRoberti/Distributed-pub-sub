@@ -8,6 +8,8 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.DependencyInjection;
 namespace EventEngine.Business;
 
+// This is a BackgroundService that periodically checks if there are any non-processed Events and if so,
+// for every Subscription it dispatches it to the corresponding CallbackUrl
 public class DispatchService(IServiceProvider serviceProvider, ILogger<DispatchService> logger) : BackgroundService
 {
 
@@ -20,14 +22,15 @@ public class DispatchService(IServiceProvider serviceProvider, ILogger<DispatchS
         {
             try
             {
+                // Getting the Services from the scope
                 using var scope = serviceProvider.CreateScope();
                 var repository = scope.ServiceProvider.GetRequiredService<IRepository>();
                 var clientHttp = scope.ServiceProvider.GetRequiredService<IClientHttp>();
 
-                // i create a PENDING DispatchLog record for each Subscription to the Events
+                // Creates a PENDING DispatchLog record for each Subscription to the Events
                 await CreateDispatchLogsAsync(repository, cancellationToken);
 
-                // i dispatch all the PENDING DispatchLogs, both the newly created and the ququed ones
+                // Dispatches all the PENDING DispatchLogs, both the newly created and the ququed ones
                 await ProcessPendingLogsAsync(repository, clientHttp, cancellationToken);
             }
             catch (Exception ex)
@@ -41,16 +44,18 @@ public class DispatchService(IServiceProvider serviceProvider, ILogger<DispatchS
 
     private async Task CreateDispatchLogsAsync(IRepository repository, CancellationToken cancellationToken)
     {
-        // i get the non-processed events
+        // Gets the non-processed events
         var newEvents = await repository.GetUnprocessedEventsAsync(cancellationToken);
 
+        // Creates a new DispatchLog for every Subscription submitted to that EventType
         foreach (var ev in newEvents)
         {
-            // i query the Subscriptions table to find (active non-deleted) subscriptions interested in the current event ev
+            // Gets the Subscriptions table to find (active non-deleted) subscriptions interested in the current event ev
             var subscriptions = await repository.GetSubscriptionsFromEventTypeAsync(ev.EventType, cancellationToken);
+
             foreach (var sub in subscriptions)
             {
-                // for each subscription interested in the event I add a new DisptachLog with the status PENDING
+                // For every subscription interested in the event I add a new DisptachLog with the status PENDING
                 await repository.CreateDispatchLogAsync(ev.Id, sub.Id, cancellationToken);
             }
 
@@ -58,57 +63,65 @@ public class DispatchService(IServiceProvider serviceProvider, ILogger<DispatchS
             ev.Processed = true;
         }
 
+        // If the list of events has at least one element the changes are saved in the db
+        // to save the processd status (ev.Processed line)
         if (newEvents.Any())
             await repository.SaveChangesAsync(cancellationToken);
     }
 
     private async Task ProcessPendingLogsAsync(IRepository repository, IClientHttp clientHttp, CancellationToken cancellationToken)
     {
-        // i get all the DispatchLogs with PENDING status and Attempts < 3
+        // Gets all the DispatchLogs with PENDING status and Attempts < 3
         var pendingLogs = await repository.GetPendingDispatchLogsAsync(cancellationToken);
 
         if (!pendingLogs.Any()) return;
 
-        foreach (var log in pendingLogs)
+        foreach (var dispatchedLog in pendingLogs)
         {
-            // i get the CallbackUrl from the SubscriptionId in the DispatchLog
-            var callbackUrl = await repository.GetCallbackUrlOfSubscription(log.SubscriptionId, cancellationToken);
+            // Gets the CallbackUrl from the SubscriptionId in the DispatchLog
+            var callbackUrl = await repository.GetCallbackUrlOfSubscription(dispatchedLog.SubscriptionId, cancellationToken);
 
+            // It should not be possible for the CallbackUrl to be null because it is required in the SubscriptionModel 
             if (string.IsNullOrEmpty(callbackUrl))
             {
-                log.Status = "FAILED";
-                log.ErrorMessage = "CallbackUrl not found";
+                dispatchedLog.Status = "FAILED";
+                dispatchedLog.ErrorMessage = "CallbackUrl not found";
+                // Go to the next pending logs
                 continue;
             }
 
             try
             {
-                log.Attempts++;
-                log.DispatchedAt = DateTime.UtcNow;
+                // Updats the number of attempts
+                dispatchedLog.Attempts++;
+                // If the SendNotificationAsync fails we still save the time in the DispatchedAt field, in this way 
+                // we can know whenever the send is occurred, failed or not
+                dispatchedLog.DispatchedAt = DateTime.UtcNow;
 
                 // http call to the url with the payload as content
-                var (IsSuccess, StatusCode, Error) = await clientHttp.SendNotificationAsync(callbackUrl, log.Event!.Payload, cancellationToken);
+                var (IsSuccess, StatusCode, Error) = await clientHttp.SendNotificationAsync(callbackUrl, dispatchedLog.Event!.Payload, cancellationToken);
 
                 if (IsSuccess)
                 {
-                    log.Status = "SUCCESS";
-                    log.ErrorMessage = null;
+                    dispatchedLog.Status = "SUCCESS";
+                    dispatchedLog.ErrorMessage = null;
                 }
                 else
                 {
-                    log.Status = "FAILED";
-                    log.ErrorMessage = $"HTTP {StatusCode}: {Error}";
+                    dispatchedLog.Status = "FAILED";
+                    dispatchedLog.ErrorMessage = $"HTTP {StatusCode}: {Error}";
                 }
 
             }
             catch (Exception ex)
             {
-                log.Status = "FAILED";
-                log.ErrorMessage = ex.Message;
-                logger.LogWarning($"Failed sending for DispatchLog {log.Id}");
+                dispatchedLog.Status = "FAILED";
+                dispatchedLog.ErrorMessage = ex.Message;
+                logger.LogWarning($"Failed sending for DispatchLog {dispatchedLog.Id}");
             }
         }
 
+        // After dispatching every Event, the DispatchLogs are updated
         await repository.SaveChangesAsync(cancellationToken);
     }
 }

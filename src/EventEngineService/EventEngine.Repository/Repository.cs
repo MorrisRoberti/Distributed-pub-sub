@@ -47,7 +47,8 @@ public class Repository(EventEngineDbContext eventEngineDbContext) : IRepository
         else
         {
 
-            // here i know for sure that the subscription exists
+            // Here i know for sure that the subscription exists
+            // I check if it is deleted or inactive
             if (subscription.DeletedAt is not null)
             {
                 existing.DeletedAt = DateTime.UtcNow;
@@ -57,7 +58,7 @@ public class Repository(EventEngineDbContext eventEngineDbContext) : IRepository
             else
             {
 
-                // the Subscription is already present, I update the necessary fields
+                // The Subscription is present and active (and not deleted), I update the necessary fields
                 // NOTE: This is a Put so all fields should be populated
                 existing.EventType = subscription.EventType;
                 existing.CallbackUrl = subscription.CallbackUrl;
@@ -66,7 +67,7 @@ public class Repository(EventEngineDbContext eventEngineDbContext) : IRepository
             }
         }
 
-        await eventEngineDbContext.SaveChangesAsync();
+        await eventEngineDbContext.SaveChangesAsync(cancellationToken);
     }
 
     public async Task<IEnumerable<Event>> GetUnprocessedEventsAsync(CancellationToken cancellationToken = default)
@@ -99,6 +100,7 @@ public class Repository(EventEngineDbContext eventEngineDbContext) : IRepository
         return newLog;
     }
 
+    // Takes every PENDING or FAILED DispatchLog that has had less than 3 attempts
     public async Task<IEnumerable<DispatchLog>> GetPendingDispatchLogsAsync(CancellationToken cancellationToken = default)
     {
         return await eventEngineDbContext.DispatchLogs
