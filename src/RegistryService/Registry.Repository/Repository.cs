@@ -37,16 +37,16 @@ public class Repository(SubscriptionDbContext subscriptionDbContext) : IReposito
 
     public async Task<IEnumerable<OutboxMessage>> GetPendingOutboxMessagesAsync()
     {
-        return await subscriptionDbContext.Set<OutboxMessage>()
-            .Where(x => x.ProcessedOnUtc == null)
-            .OrderBy(x => x.OccurredOnUtc)
+        return await subscriptionDbContext.OutboxMessages
+            .Where(x => x.ProcessedOnUtc == null) // Search all the non-processed messages
+            .OrderBy(x => x.OccurredOnUtc) // It's important to get the messages in the order in which they have been sent
             .ToListAsync();
     }
 
     public async Task MarkOutboxMessageAsProcessedAsync(Guid id)
     {
-        var message = await subscriptionDbContext.Set<OutboxMessage>().FindAsync(id);
-        if (message != null)
+        var message = await subscriptionDbContext.OutboxMessages.FindAsync(id);
+        if (message is not null)
         {
             message.ProcessedOnUtc = DateTime.UtcNow;
             await subscriptionDbContext.SaveChangesAsync();
@@ -68,7 +68,8 @@ public class Repository(SubscriptionDbContext subscriptionDbContext) : IReposito
 
     public async Task<Subscription?> GetSubscriptionAsync(Guid subscriptionId, CancellationToken cancellationToken = default)
     {
-        return await subscriptionDbContext.Subscriptions.Where(s => s.Id == subscriptionId && s.DeletedAt == null).FirstOrDefaultAsync(cancellationToken);
+        // I use SingleOrDefaultAsync because it gives an error if the record is duplicated
+        return await subscriptionDbContext.Subscriptions.Where(s => s.Id == subscriptionId && s.DeletedAt == null).SingleOrDefaultAsync(cancellationToken);
     }
     public void UpdateSubscription(Subscription subscription)
     {

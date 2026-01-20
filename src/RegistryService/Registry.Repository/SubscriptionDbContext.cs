@@ -7,13 +7,13 @@ public class SubscriptionDbContext(DbContextOptions<SubscriptionDbContext> dbCon
 {
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Subscription>().HasKey(x => x.Id);
-        modelBuilder.Entity<Subscription>().Property(e => e.Id).ValueGeneratedOnAdd();
-        modelBuilder.Entity<Subscription>().Property(e => e.CreatedAt).ValueGeneratedOnAdd();
+        modelBuilder.Entity<Subscription>().HasKey(s => s.Id);
+        modelBuilder.Entity<Subscription>().Property(s => s.Id).ValueGeneratedOnAdd();
+        modelBuilder.Entity<Subscription>().Property(s => s.CreatedAt).ValueGeneratedOnAdd();
 
-        modelBuilder.Entity<OutboxMessage>()
-        .HasKey(e => e.Id);
-        modelBuilder.Entity<OutboxMessage>().Property(e => e.Id).ValueGeneratedOnAdd();
+        modelBuilder.Entity<OutboxMessage>().HasKey(m => m.Id);
+        modelBuilder.Entity<OutboxMessage>().Property(m => m.Id).ValueGeneratedOnAdd();
+        // could add a ValueGeneratedOnAdd also for OccurredOnUtc field
     }
 
     public DbSet<Subscription> Subscriptions { get; set; }

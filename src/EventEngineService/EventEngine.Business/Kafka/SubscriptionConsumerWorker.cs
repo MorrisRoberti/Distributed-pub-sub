@@ -49,7 +49,7 @@ public class SubscriptionConsumerWorker : BackgroundService
                     // i consume the record in the topic queue
                     var result = _consumer.Consume(cancellationToken);
 
-                    if (result != null)
+                    if (result is not null)
                     {
                         try
                         {
@@ -58,7 +58,7 @@ public class SubscriptionConsumerWorker : BackgroundService
                             SubscriptionDTO? subscription = JsonSerializer.Deserialize<SubscriptionDTO>(result.Message.Value);
 
 
-                            if (subscription != null)
+                            if (subscription is not null)
                             {
 
                                 _logger.LogInformation($"Received subscription: {subscription.Id}");
@@ -86,7 +86,7 @@ public class SubscriptionConsumerWorker : BackgroundService
 
     private async Task ProcessMessage(SubscriptionDTO subscription)
     {
-        if (subscription == null) return;
+        if (subscription is null) return;
 
         using (var scope = _serviceProvider.CreateScope())
         {

@@ -31,7 +31,7 @@ public class SubscriptionController(IBusiness business, ILogger<SubscriptionCont
 
         var (authResult, error) = await identityClientHttp.AuthorizeAsync(authRequest);
 
-        if (authResult == null)
+        if (authResult is null)
         {
             logger.LogWarning($"HTTP POST: Auth failed for User {subscription.UserId}. Error: {error}");
 
@@ -56,6 +56,8 @@ public class SubscriptionController(IBusiness business, ILogger<SubscriptionCont
         return CreatedAtAction(nameof(GetSubscription), new { subscriptionId = subId }, response);
     }
 
+
+    // This is the GET endpoint used to obtain the information of the subscription from the id
     [HttpGet("{subscriptionId:guid}", Name = "GetSubscription")]
     public async Task<ActionResult<SubscriptionDTO?>> GetSubscription(Guid subscriptionId)
     {
@@ -74,6 +76,7 @@ public class SubscriptionController(IBusiness business, ILogger<SubscriptionCont
         return Ok(sub);
     }
 
+    // The PUT action updates all the fields of the object
     [HttpPut("{subscriptionId:guid}", Name = "UpdateSubscription")]
     public async Task<ActionResult<SubscriptionDTO>> UpdateSubscription(Guid subscriptionId, SubscriptionDTO subscription)
     {

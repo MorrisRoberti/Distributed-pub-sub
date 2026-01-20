@@ -23,7 +23,7 @@ public class IdentityController(IBusiness business, ILogger<IdentityController> 
         var (credentials, errorMessage) = await business.AuthorizeUserAsync(userCredentials);
 
         // controls and logs
-        if (credentials == null)
+        if (credentials is null)
         {
             logger.LogInformation($"HTTP POST: Error in authorization of user with id {userCredentials.UserId} -> {errorMessage}");
             return errorMessage switch

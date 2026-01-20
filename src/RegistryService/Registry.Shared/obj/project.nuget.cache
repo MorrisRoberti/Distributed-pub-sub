@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "+YUZjEVJDdPPN5rUbzvBpLNgptZ81LUcd1/dTQSFs+Tso+UjAo3gKIil7X++tzdVHVKJWf6349uOlu6m6vNDuQ==",
+  "dgSpecHash": "3s23IqrHO87ZO1lvM9pVtmKy8vhUynQGqtt4l3mwC6rMJEGYrKsFMEON3FnBmucmIGSvZxR0th8qKcvCFlLFiA==",
   "success": true,
-  "projectFilePath": "/mnt/c/workspace_personale/Distributed-pub-sub/src/RegistryService/Registry.Shared/Registry.Shared.csproj",
+  "projectFilePath": "/home/morris/Workspace/dotnet_projects/distributed_pub_sub/src/RegistryService/Registry.Shared/Registry.Shared.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

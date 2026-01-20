@@ -33,7 +33,7 @@ public class Repository(EventEngineDbContext eventEngineDbContext) : IRepository
         Subscription? existing = await eventEngineDbContext.Subscriptions
             .FirstOrDefaultAsync(s => s.Id == subscription.Id);
 
-        if (existing == null)
+        if (existing is null)
         {
             // The Subscription does not exist i create it and add it to db
             Subscription newSub = new Subscription
@@ -49,7 +49,7 @@ public class Repository(EventEngineDbContext eventEngineDbContext) : IRepository
         {
 
             // here i know for sure that the subscription exists
-            if (subscription.DeletedAt != null)
+            if (subscription.DeletedAt is not null)
             {
                 existing.DeletedAt = DateTime.UtcNow;
                 existing.IsActive = false;

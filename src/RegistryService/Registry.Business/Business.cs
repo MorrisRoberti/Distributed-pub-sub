@@ -58,6 +58,7 @@ public class Business(IRepository repository, ILogger<Business> logger) : IBusin
 
     public async Task<SubscriptionDTO?> UpdateSubscriptionAsync(Guid subscriptionId, SubscriptionDTO subscription, CancellationToken cancellationToken = default)
     {
+        // Get the Subcription from db
         var sub = await repository.GetSubscriptionAsync(subscriptionId);
 
         if (sub is null)
@@ -67,13 +68,17 @@ public class Business(IRepository repository, ILogger<Business> logger) : IBusin
         try
         {
 
+            // Update the fields
             sub.UserId = subscription.UserId;
             sub.EventType = subscription.EventType;
             sub.CallbackUrl = subscription.CallbackUrl;
             sub.IsActive = subscription.IsActive;
 
+            // Synchronously update the subscription
+            // NOTE: since I'm just modifying the state of the object in the subscriptionDbContext I don't need to do it asynchronously
             repository.UpdateSubscription(sub);
 
+            // Create a new record in OutboxMessages to signal that a record has been updated
             await repository.AddOutboxMessageAsync(sub, "Updated");
 
             await repository.SaveChangesAsync(cancellationToken);
@@ -93,6 +98,7 @@ public class Business(IRepository repository, ILogger<Business> logger) : IBusin
         catch (Exception ex)
         {
             logger.LogError(ex, "Error while Updating subscription on db");
+            // Actually this is a bit useless because with "using" EF Core automatically rollsback the transaction if there is an error
             await transaction.RollbackAsync();
             throw;
         }
@@ -126,6 +132,7 @@ public class Business(IRepository repository, ILogger<Business> logger) : IBusin
         catch (Exception ex)
         {
             logger.LogError(ex, "Error while deleting subscription on db");
+            // Actually this is a bit useless because with "using" EF Core automatically rollsback the transaction if there is an error
             await transaction.RollbackAsync();
             throw;
         }

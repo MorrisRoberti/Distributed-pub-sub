@@ -15,7 +15,7 @@ public class Business(IRepository repository, ILogger<Business> logger) : IBusin
     {
         User? user = await repository.GetUserFromIdAsync(userCredentials.UserId, cancellationToken);
 
-        if (user == null)
+        if (user is null)
         {
             // on the first access the user record does not exist in db, so I create it
             // i create the user on db and set the token in the credentials return dto

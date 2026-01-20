@@ -8,6 +8,6 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = Registry.Business
-build_property.ProjectDir = /mnt/c/workspace_personale/Distributed-pub-sub/src/RegistryService/Registry.Business/
+build_property.ProjectDir = /home/morris/Workspace/dotnet_projects/distributed_pub_sub/src/RegistryService/Registry.Business/
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 

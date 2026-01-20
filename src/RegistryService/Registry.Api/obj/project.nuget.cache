@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "aN4Rp3PXjN9dOi85qujcFZPL/1MXZZpRCo7DO/3DNYfBNgj/RXQpwZoHnl0Obq45VigfuIACO0Cw5jWfzZDhRw==",
+  "dgSpecHash": "NuvLtWgQMhRQoS871CbfMA3SswWamGebu1s9qAA5FjA6J+TzB0TJyNQFIqIAE37TB0txASyvwH+ifN7l9IjoEw==",
   "success": true,
-  "projectFilePath": "/mnt/c/workspace_personale/Distributed-pub-sub/src/RegistryService/Registry.Api/Registry.Api.csproj",
+  "projectFilePath": "/home/morris/Workspace/dotnet_projects/distributed_pub_sub/src/RegistryService/Registry.Api/Registry.Api.csproj",
   "expectedPackageFiles": [
     "/home/morris/.nuget/packages/azure.core/1.25.0/azure.core.1.25.0.nupkg.sha512",
     "/home/morris/.nuget/packages/azure.identity/1.7.0/azure.identity.1.7.0.nupkg.sha512",

@@ -1,38 +1,38 @@
 {
   "format": 1,
   "restore": {
-    "/mnt/c/workspace_personale/Distributed-pub-sub/src/RegistryService/Registry.Business/Registry.Business.csproj": {}
+    "/home/morris/Workspace/dotnet_projects/distributed_pub_sub/src/RegistryService/Registry.Business/Registry.Business.csproj": {}
   },
   "projects": {
-    "/mnt/c/workspace_personale/Distributed-pub-sub/src/RegistryService/Registry.Business/Registry.Business.csproj": {
+    "/home/morris/Workspace/dotnet_projects/distributed_pub_sub/src/RegistryService/Registry.Business/Registry.Business.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/mnt/c/workspace_personale/Distributed-pub-sub/src/RegistryService/Registry.Business/Registry.Business.csproj",
+        "projectUniqueName": "/home/morris/Workspace/dotnet_projects/distributed_pub_sub/src/RegistryService/Registry.Business/Registry.Business.csproj",
         "projectName": "Registry.Business",
-        "projectPath": "/mnt/c/workspace_personale/Distributed-pub-sub/src/RegistryService/Registry.Business/Registry.Business.csproj",
+        "projectPath": "/home/morris/Workspace/dotnet_projects/distributed_pub_sub/src/RegistryService/Registry.Business/Registry.Business.csproj",
         "packagesPath": "/home/morris/.nuget/packages/",
-        "outputPath": "/mnt/c/workspace_personale/Distributed-pub-sub/src/RegistryService/Registry.Business/obj/",
+        "outputPath": "/home/morris/Workspace/dotnet_projects/distributed_pub_sub/src/RegistryService/Registry.Business/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/mnt/c/workspace_personale/Distributed-pub-sub/nuget.config",
+          "/home/morris/Workspace/dotnet_projects/distributed_pub_sub/nuget.config",
           "/home/morris/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
-          "/mnt/c/workspace_personale/Distributed-pub-sub/LocalNuGet": {},
+          "/home/morris/Workspace/dotnet_projects/distributed_pub_sub/LocalNuGet": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "/mnt/c/workspace_personale/Distributed-pub-sub/src/RegistryService/Registry.Repository/Registry.Repository.csproj": {
-                "projectPath": "/mnt/c/workspace_personale/Distributed-pub-sub/src/RegistryService/Registry.Repository/Registry.Repository.csproj"
+              "/home/morris/Workspace/dotnet_projects/distributed_pub_sub/src/RegistryService/Registry.Repository/Registry.Repository.csproj": {
+                "projectPath": "/home/morris/Workspace/dotnet_projects/distributed_pub_sub/src/RegistryService/Registry.Repository/Registry.Repository.csproj"
               },
-              "/mnt/c/workspace_personale/Distributed-pub-sub/src/RegistryService/Registry.Shared/Registry.Shared.csproj": {
-                "projectPath": "/mnt/c/workspace_personale/Distributed-pub-sub/src/RegistryService/Registry.Shared/Registry.Shared.csproj"
+              "/home/morris/Workspace/dotnet_projects/distributed_pub_sub/src/RegistryService/Registry.Shared/Registry.Shared.csproj": {
+                "projectPath": "/home/morris/Workspace/dotnet_projects/distributed_pub_sub/src/RegistryService/Registry.Shared/Registry.Shared.csproj"
               }
             }
           }
@@ -80,36 +80,36 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/8.0.121/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/8.0.122/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "/mnt/c/workspace_personale/Distributed-pub-sub/src/RegistryService/Registry.Repository/Registry.Repository.csproj": {
+    "/home/morris/Workspace/dotnet_projects/distributed_pub_sub/src/RegistryService/Registry.Repository/Registry.Repository.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/mnt/c/workspace_personale/Distributed-pub-sub/src/RegistryService/Registry.Repository/Registry.Repository.csproj",
+        "projectUniqueName": "/home/morris/Workspace/dotnet_projects/distributed_pub_sub/src/RegistryService/Registry.Repository/Registry.Repository.csproj",
         "projectName": "Registry.Repository",
-        "projectPath": "/mnt/c/workspace_personale/Distributed-pub-sub/src/RegistryService/Registry.Repository/Registry.Repository.csproj",
+        "projectPath": "/home/morris/Workspace/dotnet_projects/distributed_pub_sub/src/RegistryService/Registry.Repository/Registry.Repository.csproj",
         "packagesPath": "/home/morris/.nuget/packages/",
-        "outputPath": "/mnt/c/workspace_personale/Distributed-pub-sub/src/RegistryService/Registry.Repository/obj/",
+        "outputPath": "/home/morris/Workspace/dotnet_projects/distributed_pub_sub/src/RegistryService/Registry.Repository/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/mnt/c/workspace_personale/Distributed-pub-sub/nuget.config",
+          "/home/morris/Workspace/dotnet_projects/distributed_pub_sub/nuget.config",
           "/home/morris/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
-          "/mnt/c/workspace_personale/Distributed-pub-sub/LocalNuGet": {},
+          "/home/morris/Workspace/dotnet_projects/distributed_pub_sub/LocalNuGet": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "/mnt/c/workspace_personale/Distributed-pub-sub/src/RegistryService/Registry.Shared/Registry.Shared.csproj": {
-                "projectPath": "/mnt/c/workspace_personale/Distributed-pub-sub/src/RegistryService/Registry.Shared/Registry.Shared.csproj"
+              "/home/morris/Workspace/dotnet_projects/distributed_pub_sub/src/RegistryService/Registry.Shared/Registry.Shared.csproj": {
+                "projectPath": "/home/morris/Workspace/dotnet_projects/distributed_pub_sub/src/RegistryService/Registry.Shared/Registry.Shared.csproj"
               }
             }
           }
@@ -145,28 +145,28 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/8.0.121/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/8.0.122/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "/mnt/c/workspace_personale/Distributed-pub-sub/src/RegistryService/Registry.Shared/Registry.Shared.csproj": {
+    "/home/morris/Workspace/dotnet_projects/distributed_pub_sub/src/RegistryService/Registry.Shared/Registry.Shared.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/mnt/c/workspace_personale/Distributed-pub-sub/src/RegistryService/Registry.Shared/Registry.Shared.csproj",
+        "projectUniqueName": "/home/morris/Workspace/dotnet_projects/distributed_pub_sub/src/RegistryService/Registry.Shared/Registry.Shared.csproj",
         "projectName": "Registry.Shared",
-        "projectPath": "/mnt/c/workspace_personale/Distributed-pub-sub/src/RegistryService/Registry.Shared/Registry.Shared.csproj",
+        "projectPath": "/home/morris/Workspace/dotnet_projects/distributed_pub_sub/src/RegistryService/Registry.Shared/Registry.Shared.csproj",
         "packagesPath": "/home/morris/.nuget/packages/",
-        "outputPath": "/mnt/c/workspace_personale/Distributed-pub-sub/src/RegistryService/Registry.Shared/obj/",
+        "outputPath": "/home/morris/Workspace/dotnet_projects/distributed_pub_sub/src/RegistryService/Registry.Shared/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/mnt/c/workspace_personale/Distributed-pub-sub/nuget.config",
+          "/home/morris/Workspace/dotnet_projects/distributed_pub_sub/nuget.config",
           "/home/morris/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
-          "/mnt/c/workspace_personale/Distributed-pub-sub/LocalNuGet": {},
+          "/home/morris/Workspace/dotnet_projects/distributed_pub_sub/LocalNuGet": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -200,7 +200,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/8.0.121/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/8.0.122/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
